@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/porp/Investmentorder.html?time= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:42 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Investment Order</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../Lay/layui.js"></script>
+    <link href="../../Lay/css/layui.css" rel="stylesheet" />
+    <script src="../../js/comm.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../Lay/lay/modules/i18n.js"></script>
+    <style type="text/css">
+        .top {
+            background-color: #fff;
+            border-bottom: 1px solid #EEEEEE;
+            z-index: 100;
+            width: 100%;
+            margin-bottom: 5px;
+            height: 46px;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .topname {
+            line-height: 46px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 50%;
+            text-align: center;
+            color: #000;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+    <script>
+        layui.use(['form', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var element = layui.element;
+            var flow = layui.flow;
+            var topindex = parent.layer.getFrameIndex(window.name);
+
+            $().ready(function () {
+                orderlist();
+                function getorderlist(page, pagesize, lis) {
+                    var liss = [];
+                    var totolcount = 0;
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        page: page,
+                        limit: pagesize,
+                        action: "orderlist",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = false;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                var html = "";
+                                totolcount = json.PageTotal;
+                                if (json.JsonResult.length == 0) {
+                                    html += "<div style='height:180px;text-align:center;line-height:180px;'>";
+                                    html += "<img src='/img/6.png' style='height:150px;'>";
+                                    html += "</div>";
+                                } else {
+                                    var t1 = "Price";
+                                    var t2 = "Daily income";
+                                    var t3 = "Estimated income";
+                                    var t4 = "Cycle days";
+                                    var t5 = "day";
+                                    var t6 = "time to buy";
+                                    var t7 = "Working";
+                                    for (var i = 0; i < json.JsonResult.length; i++) {
+                                        html += "<div style=\"margin:4px;  background:#fff; position:relative; border-radius:10px;\">";
+                                        html += "<div style=\"margin:10px;height: auto; overflow: hidden; padding-bottom:5px;\">";
+                                        html += "<div style=\"height:30px;padding-top:10px;\">";
+                                        html += "<div style=\"width:100%; float:left; height:27px;line-height:27px; \">";
+                                        html += "<p style=\"margin-left:5px; font-weight:bold;font-size:16px;\">" + json.JsonResult[i].name + "</p>";
+                                        html += "</div>";
+                                        html += "</div>";
+                                        html += "<div style=\"height:25px;\">";
+                                        html += "<div style=\"width:100%;  text-align:left; height:25px;line-height:25px; \">";
+                                        html += "<p style=\"margin-left:5px; font-size:12px; \">" + t1 + "：<font style=\"color:#117546;\">₦ " + json.JsonResult[i].price + "</font></p>";
+                                        html += "</div>";
+                                        html += "</div>";
+                                        html += "<div style=\"height:22px;line-height:22px;\">";
+                                        html += "<p style=\"margin-left:5px; font-size:12px;\">" + t2 + "：<font style=\"color:#117546;\">₦ " + json.JsonResult[i].hour_income + "</font></p>";
+                                        html += "</div>";
+                                        html += "<div style=\"height:22px;line-height:22px;\">";
+                                        html += "<p style=\"margin-left:5px; font-size:12px;\">Settled income：<font style=\"color:#117546;\">₦ " + json.JsonResult[i].now_income + "</font></p>";
+                                        html += "</div>";
+                                        html += "<div style=\"height:22px;line-height:22px;\">";
+                                        html += "<p style=\"margin-left:5px; font-size:12px;\">" + t3 + "：<font style=\"color:#117546;\">₦ " + json.JsonResult[i].all_income + "</font></p>";
+                                        html += "</div>";
+                                        html += "<div style=\"height:22px;line-height:22px;\">";
+                                        html += "<p style=\"margin-left:5px; font-size:12px;\">" + t4 + "：<font style=\"color:red\">35 " + t5 + "</font></p>";
+                                        html += "</div>";
+                                        html += "<div style=\"height:22px;\">";
+                                        html += "<div style=\"width:100%;  text-align:left; height:22px;line-height:22px; \">";
+                                        html += "<p style=\"margin-left:5px; font-size:12px; \">" + t6 + "：<font style=\"color:#117546;\">" + json.JsonResult[i].createtime + "</font></p>";
+                                        html += "</div>";
+                                        html += "</div>";
+                                        html += "<div style=\"height:22px;\">";
+                                        html += "<div style=\"width:100%;  text-align:left; height:22px;line-height:22px; \">";
+                                        html += "<p style=\"margin-left:5px; font-size:12px; \">Settlement time：<font style=\"color:#117546;\">" + json.JsonResult[i].jstime + "</font></p>";
+                                        html += "</div>";
+                                        html += "</div>";
+                                        html += "</div>";
+                                        html += "<div  style=\"text-align:center; height:45px; width:100px; color:#fff; position:absolute; right:0px; top:75px; line-height:45px; float:right;font-weight: 700; border-radius:25px 0px 0px 25px; background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226));\">";
+                                        html += t7;
+                                        html += "</div>";
+                                        html += "</div>";
+                                    }
+                                }
+                                lis.push(html);
+                            }
+                            CommAlert(json);
+                        });
+                    liss.push(totolcount);
+                    liss.push(lis);
+                    return liss;
+                }
+
+                function orderlist() {
+                    $("#orderlist").html("");
+                    var list_end_txt = "No more data";
+                    flow.load({
+                        elem: '#orderlist',
+                        isAuto: true,
+                        end: list_end_txt
+                        , done: function (page, next) {
+                            setTimeout(function () {
+                                var lis = [];
+                                var josn = getorderlist(page, 10, lis);
+                                var totolpage = josn[0];
+                                $("#msgcount1").html(totolpage);
+                                var totolpage = totolpage / 10;
+                                if (totolpage < 1)
+                                    totolpage = 1;
+                                else
+                                    totolpage = modFoat(totolpage);
+                                next(josn[1].join(''), page < totolpage);
+                                element.init();
+                            }, 200);
+                        }
+                    });
+                }
+
+                function modFoat(v) {
+                    var _max = parseInt(v) + 1;
+                    if (_max - v < 1) {
+                        return _max;
+                    }
+                }
+            });
+
+            $(document).on("click", '#btnClose', function () {
+                top.layer.close(topindex);
+            });
+
+        });
+    </script>
+</head>
+<body style="background:#DBF0FB;">
+    <input type="hidden" id="list_end_txt" value="" />
+    <input type="hidden" id="investmentorder_txt1" value="" />
+    <input type="hidden" id="investmentorder_txt2" value="" />
+    <input type="hidden" id="investmentorder_txt3" value="" />
+    <input type="hidden" id="investmentorder_txt4" value="" />
+    <input type="hidden" id="investmentorder_txt5" value="" />
+    <input type="hidden" id="investmentorder_txt6" value="" />
+    <input type="hidden" id="investmentorder_txt7" value="" />
+    <div class="top">
+        <div style="float:left; line-height:46px;width:50%;" id="btnClose">
+            <i class="layui-icon" style=" color:#000; margin-left:12px; font-size:18px;  font-weight:bold;">&#xe603;</i>
+        </div>
+        <font class="topname" id="investmentorder_title">
+            Investment Order
+        </font>
+        <div style="float:right; text-align:right; line-height:46px;width:50%;">
+        </div>
+    </div>
+    <div class="layui-form layui-tab-content" style="padding:2px; margin-top:40px; " id="orderlist">
+        <!--<div style="margin:10px;  background:#fff; position:relative; border-radius:10px;">
+            <div style="margin:10px;">
+                <div style="height:30px;padding-top:10px;">
+                    <div style="width:70%; float:left; height:27px;line-height:27px; ">
+                        <p style="margin-left:5px; font-weight:bold;font-size:18px;">product1</p>
+                    </div>
+                </div>
+                <div style="height:25px;">
+                    <div style="width:100%;  text-align:left; height:25px;line-height:25px; ">
+                        <p style="margin-left:5px; font-size:12px; ">Price：<font style="color:red">RS 100.00</font></p>
+                    </div>
+                </div>
+                <div style="height:25px;line-height:25px;">
+                    <p style="margin-left:5px; font-size:12px;">Per hour：<font style="color:red">RS 0.00</font></p>
+                </div>
+                <div style="height:25px;line-height:25px;">
+                    <p style="margin-left:5px; font-size:12px;">Estimated revenue：<font style="color:red">RS 0.00</font></p>
+                </div>
+                <div style="height:25px;line-height:25px;">
+                    <p style="margin-left:5px; font-size:12px;">Cycle days：<font style="color:red">180 day</font></p>
+                </div>
+                <div style="height:27px;">
+                    <div style="width:100%;  text-align:left; height:27px;line-height:27px; ">
+                        <p style="margin-left:5px; font-size:12px; ">Buy time：<font style="color:red">2021-10-30 15:13:10</font></p>
+                    </div>
+                </div>
+            </div>
+            <div id="Receive1" style="  text-align:center; height:45px; width:100px; color:#fff; position:absolute; right:0px; top:60px; line-height:45px; float:right;font-weight: 700; border-radius:25px 0px 0px 25px; background:#117546;">
+                Normal state
+            </div>
+        </div>-->
+    </div>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/porp/Investmentorder.html?time= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:42 GMT -->
+</html>

@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/porp/Rechargerecord.html?time by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:52 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Recharge Record</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../Lay/layui.js"></script>
+    <link href="../../Lay/css/layui.css" rel="stylesheet" />
+    <script src="../../js/comm.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../Lay/lay/modules/i18n.js"></script>
+    <style type="text/css">
+        .top {
+            background-color: #fff;
+            border-bottom: 1px solid #EEEEEE;
+            z-index: 100;
+            width: 100%;
+            margin-bottom: 5px;
+            height: 46px;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .topname {
+            line-height: 46px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 50%;
+            text-align: center;
+            color: #000;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .typitem {
+            width: auto;
+            border-radius: 5px;
+            line-height: 22px;
+            height: 22px;
+            background: #fff;
+            color: #2F4056;
+            /*   margin-left: 3px;*/
+        }
+
+        .typitemOver {
+            width: auto;
+            border-radius: 5px;
+            line-height: 22px;
+            height: 22px;
+            background: #ff6a00;
+            color: #fff;
+            margin-left: 3px;
+        }
+
+        .layui-flow-more {
+            margin: 20px 0;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .typitem {
+            width: auto;
+            border-radius: 5px;
+            line-height: 22px;
+            height: 22px;
+            background: #fff;
+            color: #2F4056;
+            /*   margin-left: 3px;*/
+        }
+
+        .typitemOver {
+            width: auto;
+            border-radius: 5px;
+            line-height: 22px;
+            height: 22px;
+            background: #ff6a00;
+            color: #fff;
+            margin-left: 3px;
+        }
+    </style>
+    <script>
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var element = layui.element;
+            var flow = layui.flow;
+            var topindex = parent.layer.getFrameIndex(window.name);
+
+            $().ready(function () {
+                itemlist();
+
+                function getitemlist(page, pagesize, lis) {
+                    var status = $("#status").val();
+                    var liss = [];
+                    var totolcount = 0;
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        status: status,
+                        page: page,
+                        limit: pagesize,
+                        action: "paylist",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = false;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                var html = "";
+                                totolcount = json.PageTotal;
+                                var orderno = "OrderNo";
+                                var Rechargeamount = "Amount"
+                                var Rechargetime = "Time"
+                                var Orderstatus = "Status";
+
+                                for (var i = 0; i < json.JsonResult.length; i++) {
+                                    html += "<div class=\"item\" style=\"height:110px; margin-top:15px; background:#f7f7f7;\">";
+                                    html += "<div style=\"margin:5px;\">";
+                                    html += "<div style=\"height:27px;margin-top:5px;\">";
+                                    html += "<div style=\"width:100%; float:left; height:27px;line-height:27px; \">";
+                                    html += "<p style=\"margin-left:5px; \">" + orderno + "：<font style=\"color:#117546\">" + json.JsonResult[i].orderno + "</font></p>";
+                                    html += "</div>";
+                                    html += "</div>";
+                                    html += "<div style=\"height:27px;\">";
+                                    html += "<div style=\"width:100%;  text-align:left; height:27px;line-height:27px; \">";
+                                    html += "<p style=\"margin-left:5px; font-size:12px; \">" + Rechargeamount + "：<font style=\"color:#117546\">₦ " + json.JsonResult[i].amount + "</font></p>";
+                                    html += "</div>";
+                                    html += "</div>";
+                                    html += "<div style=\"height:27px;\">";
+                                    html += "<div style=\"width:100%;  text-align:left; height:27px;line-height:27px; \">";
+                                    html += "<p style=\"margin-left:5px; font-size:12px; \">" + Rechargetime + "：<font style=\"color:#117546\">" + json.JsonResult[i].createtime + "</font></p>";
+                                    html += "</div>";
+                                    html += "</div>";
+                                    html += "<div style=\"height:27px;margin-top:3px;\">";
+                                    html += "<p style=\"margin-left:5px; font-size:12px; \">" + Orderstatus + "：" + json.JsonResult[i].status + "</p>";
+                                    html += "</div>";
+                                    html += "</div>";
+                                    html += "</div>";
+                                }
+                                lis.push(html);
+                            }
+                            CommAlert(json);
+                        });
+                    liss.push(totolcount);
+                    liss.push(lis);
+                    return liss;
+                }
+
+                function itemlist() {
+                    $("#itemlist").html("");
+                    var list_end_txt = "no more";
+                    flow.load({
+                        elem: '#itemlist',
+                        isAuto: true,
+                        end: list_end_txt
+                        , done: function (page, next) {
+                            setTimeout(function () {
+                                var lis = [];
+                                var josn = getitemlist(page, 10, lis);
+                                var totolpage = josn[0];
+                                var totolpage = totolpage / 10;
+                                if (totolpage < 1)
+                                    totolpage = 1;
+                                else
+                                    totolpage = modFoat(totolpage);
+                                next(josn[1].join(''), page < totolpage);
+                                element.init();
+                            }, 200);
+                        }
+                    });
+                }
+
+                function modFoat(v) {
+                    var _max = parseInt(v) + 1;
+                    if (_max - v < 1) {
+                        return _max;
+                    }
+                }
+
+
+
+                $(document).on("click", '#status_op span', function () {
+                    $("#status_op span").each(function () {
+                        $(this).addClass("typitem");
+                        $(this).removeClass("typitemOver");
+                    });
+                    $(this).addClass("typitemOver");
+                    $(this).removeClass("typitem");
+                    var id = $(this).attr("value");
+                    $("#status").val(id);
+                    itemlist();
+                });
+
+                $(document).on("click", '#status_op1 span', function () {
+                    $("#status_op1 span").each(function () {
+                        $(this).addClass("typitem");
+                        $(this).removeClass("typitemOver");
+                    });
+                    $(this).addClass("typitemOver");
+                    $(this).removeClass("typitem");
+                    var id = $(this).attr("value");
+                    $("#status1").val(id);
+                    itemlist1();
+                });
+            });
+
+            $(document).on("click", '#btnClose', function () {
+                parent.layer.close(topindex);
+            });
+
+        });
+    </script>
+</head>
+<body style="background:#DBF0FB;">
+    <input type="hidden" id="status" value="" />
+    <input type="hidden" id="list_end_txt" value="" />
+    <input type="hidden" id="rechargerecord_txt5" value="" />
+    <input type="hidden" id="rechargerecord_txt6" value="" />
+    <input type="hidden" id="rechargerecord_txt7" value="" />
+    <input type="hidden" id="rechargerecord_txt8" value="" />
+
+    <div class="top">
+        <div style="float:left; line-height:46px;width:50%;" id="btnClose">
+            <i class="layui-icon" style=" color:#000; margin-left:12px; font-size:18px;  font-weight:bold;">&#xe603;</i>
+        </div>
+        <font class="topname" id="rechargerecord_title">
+            Recharge Record
+        </font>
+        <div style="float:right; text-align:right; line-height:46px;width:50%;">
+        </div>
+    </div>
+    <div class="layui-form layui-tab-content" style="padding:2px;margin-top:55px;">
+        <div style="width: 100%;  margin: 0 auto;">
+            <div style=" width: 98%; background: #fff; margin: 0 auto;">
+                <div style="padding:10px;">
+                    <div id="status_op" style="margin-top:15px;">
+                        <span class="layui-badge typitemOver" id="rechargerecord_txt1" value="">ALL</span>
+                        <span class="layui-badge typitem" id="rechargerecord_txt2" value="0">To wait</span>
+                        <span class="layui-badge typitem" id="rechargerecord_txt3" value="1">Success</span>
+                        <span class="layui-badge typitem" id="rechargerecord_txt4" value="2">Unsuccessful</span>
+                    </div>
+                    <div id="itemlist">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/porp/Rechargerecord.html?time by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:52 GMT -->
+</html>

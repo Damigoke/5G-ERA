@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/porp/Online.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:35 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Online</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../Lay/layui.js"></script>
+    <link href="../../Lay/css/layui.css" rel="stylesheet" />
+    <script src="../../js/clipboard.min.js"></script>
+    <script src="../../js/comm.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../Lay/lay/modules/i18n.js"></script>
+    <style type="text/css">
+        .top {
+            background-color: rgb(6,170,251);
+            /*border-bottom: 1px solid #EEEEEE;*/
+            z-index: 100;
+            width: 100%;
+            margin-bottom: 5px;
+            height: 46px;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .topname {
+            line-height: 46px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 50%;
+            text-align: center;
+            color: #fff;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+    <script>
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var topindex = parent.layer.getFrameIndex(window.name);
+
+            $().ready(function () {
+                getsiteconfig();
+
+                function getsiteconfig() {
+                    var index = layer.load();
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "getkefu",
+                        time: Math.random()
+                    };
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                $("#whatsapp").html(json.JsonResult.whatsapp);
+                                //$("#copy").attr("data-clipboard-text", json.JsonResult.whatsapp);
+                                //$("#copy1").attr("data-clipboard-text", json.JsonResult.telegram);
+                                $("#telegram").html(json.JsonResult.telegram);
+                                $("#telegram1").val(json.JsonResult.telegram);
+                                $("#whatsapp1").val(json.JsonResult.whatsapp);
+                            }
+                            CommAlert(json);
+                            layer.close(index);
+                        });
+                }
+            });
+
+            $(document).on("click", '#copy1', function () {
+                var url = $("#telegram1").val();
+                if (window.android) {
+                    window.android.callAndroid("open," + url);
+                    return;
+                }
+                if (window.webkit && window.webkit.messageHandlers) {
+                    window.webkit.messageHandlers.nativeExt.postMessage({ msg: 'open,' + url });
+                    return;
+                }
+                window.open(url, "_blank")
+            });
+
+            $(document).on("click", '#copy2', function () {
+                var url = $("#whatsapp1").val();
+                if (window.android) {
+                    window.android.callAndroid("open," + url);
+                    return;
+                }
+                if (window.webkit && window.webkit.messageHandlers) {
+                    window.webkit.messageHandlers.nativeExt.postMessage({ msg: 'open,' + url });
+                    return;
+                }
+                window.open(url, "_blank")
+            });
+
+            $(document).on("click", '#copy3', function () {
+                var url = "https://t.me/era5G02";
+                if (window.android) {
+                    window.android.callAndroid("open," + url);
+                    return;
+                }
+                if (window.webkit && window.webkit.messageHandlers) {
+                    window.webkit.messageHandlers.nativeExt.postMessage({ msg: 'open,' + url });
+                    return;
+                }
+                window.open(url, "_blank")
+            });
+
+            $(document).on("click", '#copy4', function () {
+                var url = "https://t.me/era5g01";
+                if (window.android) {
+                    window.android.callAndroid("open," + url);
+                    return;
+                }
+                if (window.webkit && window.webkit.messageHandlers) {
+                    window.webkit.messageHandlers.nativeExt.postMessage({ msg: 'open,' + url });
+                    return;
+                }
+                window.open(url, "_blank")
+            });
+
+            $(document).on("click", '#btnClose', function () {
+                parent.layer.close(topindex);
+            });
+
+        });
+    </script>
+</head>
+<body style="background:#DBF0FB;">
+    <input type="hidden" id="online_txt7" value="" />
+    <input type="hidden" id="telegram1" value="" />
+    <input type="hidden" id="whatsapp1" value="" />
+    <div class="top">
+        <div style="float:left; line-height:46px;width:50%;" id="btnClose">
+            <i class="layui-icon" style=" color:#fff; margin-left:12px; font-size:18px;  font-weight:bold;">&#xe603;</i>
+        </div>
+        <font class="topname" id="online_title">
+            Online
+        </font>
+        <div style="float:right; text-align:right; line-height:46px;width:50%;">
+        </div>
+    </div>
+    <div class="layui-form layui-tab-content" style=" margin-top:46px;background: linear-gradient(180deg, rgb(6,170,251),#DBF0FB);">
+        <div style="margin:10px; text-align:center;background: #fff;
+    border-radius: 5px;
+    padding: 30px 15px;
+    position: relative;
+    z-index: 999;">
+            <div style="width:100%; margin:0 auto; margin-top:15px; font-weight: 700;font-size: 22px; color:rgb(73,74,226);">
+                9:00-20:00
+            </div>
+            <div style="width:100%; margin:0 auto; margin-top:15px;display:inline-block;color:rgb(73,74,226);font-size: 13px; " id="online_txt1">
+                Customer service consultation time
+            </div>
+            <div style="width:35%; margin:0 auto; margin-top:10px; ">
+                <img src="../../img/logo_user.png" style="width:100%;" />
+            </div>
+            <div style="width:100%; text-align:center;font-size: 12px;display: inline-block; margin-top: 20px; color:#606060;box-sizing: border-box; " id="online_txt3">
+                If you want to earn more money, join our official Telegram channel!<br />
+                If you have any questions, please contact our official customer service here. Our official customer service will help you solve your problems in the first time!
+            </div>
+            <div style="margin-top:30px; height:230px;">
+                <div style=" width:100%; height:40px;" id="copy1">
+                    <div style="width:85%; float:left;">
+                        <div style="height:35px;width:35px; float:left; text-align:center;  ">
+                            <img src="../../img/share1.png" style="border-radius: 100px; height:35px;" />
+                        </div>
+                        <div style="height:30px; float:left; text-align:left;  line-height:20px; ">
+                            <div style="margin-left:10px;color: #000;font-weight: 700;">Telegram</div>
+                            <div style="margin-left:10px;font-size: 12px; color:#117546;" id="telegram"></div>
+                        </div>
+                    </div>
+                    <div style="width:15%; float:left; text-align:right;">
+                        <img src="../../img/jt.png" style="height:15px; margin-top:10px;" />
+                    </div>
+                </div>
+                <div style=" width: 100%; height: 40px; margin-top: 10px; padding-top: 10px;" id="copy2">
+                    <div style="width:85%; float:left;">
+                        <div style="height:35px;width:35px; float:left; text-align:center;  ">
+                            <img src="../../img/share2.png" style="border-radius: 100px; height:35px;" />
+                        </div>
+                        <div style="height:30px; float:left; text-align:left;  line-height:20px; ">
+                            <div style="margin-left:10px;color: #000;font-weight: 700;">WhatsApp</div>
+                            <div style="margin-left:10px;font-size: 12px; color:#117546;" id="whatsapp"></div>
+                        </div>
+                    </div>
+                    <div style="width:15%; float:left; text-align:right;">
+                        <img src="../../img/jt.png" style="height:15px; margin-top:10px;" />
+                    </div>
+                </div>
+                <div style=" width: 100%; margin-top: 10px; padding-top: 10px; height: 40px;" id="copy3">
+                    <div style="width:85%; float:left;">
+                        <div style="height:35px;width:35px; float:left; text-align:center;  ">
+                            <img src="../../img/share1.png" style="border-radius: 100px; height:35px;" />
+                        </div>
+                        <div style="height:30px; float:left; text-align:left;  line-height:20px; ">
+                            <div style="margin-left:10px;color: #000;font-weight: 700;">Telegram group</div>
+                            <div style="margin-left:10px;font-size: 12px; color:#117546;">https://t.me/era5G02</div>
+                        </div>
+                    </div>
+                    <div style="width:15%; float:left; text-align:right;">
+                        <img src="../../img/jt.png" style="height: 15px; margin-top: 10px;" />
+                    </div>
+                </div>
+                <div style=" width:100%;margin-top:10px; padding-top:10px;" id="copy4">
+                    <div style="width:85%; float:left;">
+                        <div style="height:35px;width:35px; float:left; text-align:center;  ">
+                            <img src="../../img/share1.png" style="border-radius: 100px; height:35px;" />
+                        </div>
+                        <div style="height:30px; float:left; text-align:left;  line-height:20px; ">
+                            <div style="margin-left:10px;color: #000;font-weight: 700;">Telegram channel</div>
+                            <div style="margin-left:10px;font-size: 12px; color:#117546;">https://t.me/era5g01</div>
+                        </div>
+                    </div>
+                    <div style="width:15%; float:left; text-align:right;">
+                        <img src="../../img/jt.png" style="height: 15px; margin-top: 10px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/porp/Online.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:35 GMT -->
+</html>

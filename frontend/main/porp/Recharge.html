@@ -1,0 +1,475 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/porp/Recharge.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:33 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Recharge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../Lay/layuiff3e.js?v1.0"></script>
+    <link href="../../Lay/css/layuiff3e.css?v1.0" rel="stylesheet" />
+    <link href="../../layer_mobile/need/layer35b8.css?v1.3" rel="stylesheet" />
+    <script src="../../js/commff3e.js?v1.0"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../Lay/lay/modules/i18n.js"></script>
+    <style type="text/css">
+        .top {
+            background-color: #fff;
+            border-bottom: 1px solid #EEEEEE;
+            z-index: 100;
+            width: 100%;
+            margin-bottom: 5px;
+            height: 46px;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .topname {
+            line-height: 46px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 50%;
+            text-align: center;
+            color: #000;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .payitem1 {
+            border: 1px solid #666;
+            border-radius: 5px;
+            color: #666;
+            font-size:12px;
+        }
+
+        .payitem {
+            border: 1px solid #FF6518;
+            border-radius: 5px;
+            background: linear-gradient(to bottom, rgb(6,170,251), rgb(73,74,226));
+            color: #fff;
+            font-size: 12px;
+        }
+
+            .payitem:before {
+                content: '';
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                border: 17px solid #FF6518;
+                border-top-color: transparent;
+                border-left-color: transparent;
+                border-bottom-right-radius: 5px;
+            }
+
+            .payitem:after {
+                content: '';
+                width: 5px;
+                height: 12px;
+                position: absolute;
+                right: 6px;
+                bottom: 6px;
+                border: 2px solid #fff;
+                border-top-color: transparent;
+                border-left-color: transparent;
+                transform: rotate(45deg);
+                border-bottom-right-radius: 5px;
+            }
+
+        div#div1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: -1;
+        }
+
+            div#div1 > img {
+                height: 100%;
+                width: 100%;
+                border: 0;
+            }
+
+        .inputdiv {
+            display: flex;
+            border: 1px solid #D2D2D2 !important;
+            background-color: #fff;
+            height: 38px;
+            line-height: 38px;
+            padding: 0px 19px;
+            border-radius: 25px;
+            color: #000;
+        }
+
+        .layui-input {
+            border-style: none;
+        }
+
+        .bofang {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin-top: 50px;
+            border-radius: 100px;
+        }
+    </style>
+    <script type="text/javascript">
+        layui.use(['form', 'carousel', 'flow', 'element', 'cookie', 'mobile'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var mobile = layui.mobile;
+            var mobilelayer = mobile.layer;
+            var topindex = parent.layer.getFrameIndex(window.name);
+
+            $().ready(function () {
+                getuserinfo();
+                getamount();
+                rechargechannel();
+                function rechargechannel() {
+                    var index = layer.load();
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "pay_channel",
+                        time: Math.random()
+                    };
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                var html = "";
+                                if (json.JsonResult.length == 0) {
+                                    html += "<div style=\"height:50px;line-height:50px; text-align:center; width:100%;\">";
+                                    html += "Yeniden şarj kanalı yok";
+                                    html += "</div>";
+                                } else {
+                                    for (var i = 0; i < json.JsonResult.length; i++) {
+                                        if (i == 0) {
+                                            $("#channel").val(json.JsonResult[i].id);
+                                            if (json.JsonResult[i].id == "3") {
+                                                $("#UUI").show()
+                                            } else {
+                                                $("#UUI").hide()
+                                            }
+                                            html += "<div style=\"width:30%; float:left;margin-left:2%; margin-top:10px; text-align:center;position: relative; \" value='" + json.JsonResult[i].id + "' class='payitem channelitem'>";
+                                        } else {
+                                            html += "<div style=\"width:30%; float:left;margin-left:2%; margin-top:10px; text-align:center;position: relative; \" value='" + json.JsonResult[i].id + "' class='payitem1 channelitem'>";
+                                        }
+                                        html += "<div style=\"padding:10px;border-radius:5px;  \">";
+                                        html += json.JsonResult[i].name;
+                                        html += "</div>";
+                                        html += "</div>";
+                                    }
+                                }
+                                $("#RechargeChannel").html(html);
+                                form.render();
+                            }
+                            CommAlert(json);
+                            layer.close(index);
+                        });
+                }
+
+                $(document).on("click", '.item', function () {
+                    $("#rechargeamount").val($(this).attr("value"));
+                    var a = $("#rechargeamount").val();
+                    var re = (a / 14.84).toFixed(6);
+                    re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/))
+                    $("#UTitle").html(a + " ₦ = " + re.toFixed(2) + " U")
+                });
+
+                function getamount() {
+                    var list = ['2500', '5000', '10000', '20000', '50000', '100000', '200000', '500000', '1000000'];
+                    var html = "";
+                    for (var i = 0; i < list.length; i++) {
+                        if (i % 4 == 0)
+                            html += "<div style=\"width:22%; float:left;margin-left:1.5%;margin-top:10px; text-align:center; \" class='item' value='" + list[i] + "'>";
+                        else
+                            html += "<div style=\"width:22%; float:left;margin-left:3%;  margin-top:10px; text-align:center; \" class='item' value='" + list[i] + "'>";
+                        html += "<div style=\"border: 1px solid #b1b1b1;background: linear-gradient(to bottom, #fff,#fff);  color:#000; padding:10px; padding-left:0px; padding-right:0px; border-radius: 5px;\">";
+                        html += "₦ " + list[i] + "";
+                        html += "</div>";
+                        html += "</div>";
+                    }
+                    $("#amountlist").html(html);
+                }
+
+
+                $(document).on("click", '#video1', function () {
+                    var url = "video77e6.html?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 2,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $(document).on("click", '#video2', function () {
+                    var url = "video177e6.html?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 2,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $("#rechargeamount").keydown(function () {
+                    var a = $("#rechargeamount").val();
+                    var re = (a / 14.84).toFixed(6);
+                    re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/))
+                    $("#UTitle").html(a + " ₦ = " + re.toFixed(2) + " U")
+                });
+
+                $("#rechargeamount").keyup(function () {
+                    var a = $("#rechargeamount").val();
+                    var re = (a / 14.84).toFixed(6);
+                    re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/))
+                    $("#UTitle").html(a + " ₦ = " + re.toFixed(2) + " U")
+                });
+
+
+
+                $(document).on("click", '.channelitem', function () {
+                    $(".channelitem").each(function () {
+                        $(this).addClass("payitem1");
+                        $(this).removeClass("payitem");
+                    });
+                    $(this).addClass("payitem");
+                    $(this).removeClass("payitem1");
+                    var id = $(this).attr("value");
+                    $("#channel").val(id);
+
+                    if (id == "3") {
+                        $("#UUI").show();
+
+                    } else {
+                        $("#UUI").hide();
+                    }
+                });
+
+                function getuserinfo() {
+                    var index = layer.load();
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "getuserinfo",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = false;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                $("#amount").html("₦ " + json.JsonResult.amount);
+                            }
+                            CommAlert(json);
+                            layer.close(index);
+                        });
+                }
+
+                $(document).on("click", '#Recharge', function () {
+                    var channel = $("#channel").val();
+                    var amount = $("#rechargeamount").val();
+                    var url = "/ashx/PayServer.ashx";
+                    var pm = {
+                        trade_amount: amount,
+                        channel: channel,
+                        time: Math.random()
+                    };
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                var url = json.JsonResult;
+                                $("#rechargeamount").val("");
+                                parent.layer.open({
+                                    type: 2,
+                                    title: 'Recharge',
+                                    area: ['100%', '100%'],
+                                    shadeClose: true,
+                                    isOutAnim: false,
+                                    closeBtn: 1,
+                                    anim: 5,
+                                    shade: [0.8, '#393D49'],
+                                    maxmin: false,
+                                    content: url
+                                });
+                                //if (window.android) {
+                                //    window.android.callAndroid("open," + url);
+                                //    return;
+                                //}
+                                //if (window.webkit && window.webkit.messageHandlers) {
+                                //    window.webkit.messageHandlers.nativeExt.postMessage({ msg: 'open,' + url });
+                                //    return;
+                                //}
+                                //window.open(url, "_blank");
+                            }
+
+                            if (json.State == "201") {
+                                var main_prop_txt1 = "Farkına varmak";
+                                var main_prop_txt2 = "Daha önce ödenmemiş bir USDT ödeme emri vardı";
+                                var main_prop_txt34 = "Şimdi öde"
+
+                                var pageii = mobilelayer.open({
+                                    title: [
+                                        main_prop_txt1,
+                                        ' color:#000;font-weight:bold;'
+                                    ],
+                                    content: main_prop_txt2,
+                                    btn: [main_prop_txt34],
+                                    shadeClose: false,
+                                    yes: function () {
+                                        mobilelayer.close(pageii);
+                                        $("#rechargeamount").val("");
+                                        if (window.android) {
+                                            window.android.callAndroid("open," + json.JsonResult);
+                                            layer.close(index);
+                                            return;
+                                        }
+                                        if (window.webkit && window.webkit.messageHandlers) {
+                                            window.webkit.messageHandlers.nativeExt.postMessage({ msg: 'open,' + json.JsonResult });
+                                            layer.close(index);
+                                            return;
+                                        }
+                                        window.open(json.JsonResult, "_blank")
+                                    }
+                                });
+                            }
+
+                            CommAlert(json);
+                        });
+                });
+
+
+                $(document).on("click", '#badown', function () {
+                    var url = "https://www.binance.com/tr/download";
+                    if (window.android) {
+                        window.android.callAndroid("open," + url);
+                        return;
+                    }
+                    if (window.webkit && window.webkit.messageHandlers) {
+                        window.webkit.messageHandlers.nativeExt.postMessage({ msg: 'open,' + url });
+                        return;
+                    }
+                    window.open(url, "_blank");
+                });
+                $(document).on("click", '#badown1', function () {
+                    var url = "https://www.binance.com/tr/support/faq/c-2";
+                    if (window.android) {
+                        window.android.callAndroid("open," + url);
+                        return;
+                    }
+                    if (window.webkit && window.webkit.messageHandlers) {
+                        window.webkit.messageHandlers.nativeExt.postMessage({ msg: 'open,' + url });
+                        return;
+                    }
+                    window.open(url, "_blank");
+                });
+
+
+                $(document).on("click", '#Record', function () {
+                    var url = "Rechargerecord07cc.html?time" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 2,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+            });
+
+            $(document).on("click", '#btnClose', function () {
+                parent.layer.close(topindex);
+            });
+
+        });
+    </script>
+</head>
+<body style="background:#DBF0FB;">
+    <input type="hidden" value="" id="channel" />
+    <div class="top">
+        <div style="float:left; line-height:46px;width:50%;" id="btnClose">
+            <i class="layui-icon" style=" color:#000; margin-left:12px; font-size:18px;font-weight:bold;">&#xe603;</i>
+        </div>
+        <font class="topname" id="recharge_title">
+            Recharge
+        </font>
+        <div style="float:right; text-align:right; color:#000; line-height:46px;width:50%;">
+            <i class="layui-icon" style=" color:#000; margin-right:10px; font-size:20px; " id="Record">&#xe60a;</i>
+        </div>
+    </div>
+    <!--<div style="width:95%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); margin-top:55px; padding-top:10px; padding-bottom:10px;  border-radius:5px;  margin-bottom:10px;  height:auto; overflow:hidden;">
+        <div style="margin:10px; text-align:center; height:80px; border-radius:5px;">
+            <div style="color: #afb6bd; padding-top:15px;">
+                <span id="recharge_txt1">My balance</span>
+                <div style="color:#000;padding-top:10px; font-size:19px; font-weight:700; " id="amount">0.00</div>
+            </div>
+        </div>
+    </div>-->
+    <div style="width: 98%; margin: 0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); margin-top: 55px; padding-top: 10px; padding-bottom: 10px; border-radius: 5px; height: auto; overflow: hidden; ">
+        <div style="padding-left:10px; padding-bottom:10px;font-weight:bold; color:#08163C; ">Recharge channel</div>
+        <div id="RechargeChannel" style="color:#fff;">
+
+        </div>
+        <div style="padding-left:10px; width:100%; float:left; padding-top:20px; height:15px; padding-bottom:10px;font-weight:bold; color:#08163C;">Recharge amount <span style="font-size: 12px; font-weight:100; color: #dc660e;">（Minimum amount is ₦ 2,500 ）</span></div>
+        <div id="amountlist" style=" float: left; width: 100%; height: auto; overflow: hidden;">
+
+        </div>
+        <div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+            <div style="width: 95%; margin:0 auto;">
+                <div class="inputdiv">
+                    ₦
+                    <input type="number" id="rechargeamount" oninput="if(value.length>9)value=value.slice(0,9)" style="font-size:12px;" placeholder="Please enter the online recharge amount" class="layui-input" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; float:left;width:100%;  padding-top:15px; display:none; " id="UUI">
+            <div style="width: 95%; margin:0 auto;">
+                <div class="inputdiv" style="color:orangered; font-size:12px;">
+                    1USDT = 14.84₦，<font style="color:blue; margin-left:4px;" id="UTitle">1₦ = 0.06U</font>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+            <input class="layui-btn" id="Recharge" value="Recharge" style="width:95%; margin:0 auto; height:45px; border-radius:25px;  border:0px; background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226));" type="button" />
+        </div>
+    </div>
+
+
+    <div style="width:98%; margin: 0 auto;  margin-top:10px; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); ">
+        <div style=" padding:10px;color: #7e7e7e; line-height:18px;
+    font-size: 12px;" id="recharge_txt5">
+            <font style="color:#000;">Recharge reminder </font>  <br />   <br />
+            1. The minimum recharge amount is 2500 naira.<br />
+            2. Please do not transfer money to the same receiving account repeatedly. Every time you recharge, you must re-enter the recharging page to obtain the latest receiving account.<br />
+            3. Please wait patiently for 5-10 minutes after the payment is successful. If the amount has not been reflected in your 5G era account balance for a long time, please contact online customer service.<br /><br />
+        </div>
+    </div>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/porp/Recharge.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:35 GMT -->
+</html>

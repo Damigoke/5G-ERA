@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/porp/Platform.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:35 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../Lay/layui.js"></script>
+    <link href="../../Lay/css/layui.css" rel="stylesheet" />
+    <script src="../../js/comm.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../Lay/lay/modules/i18n.js"></script>
+    <style type="text/css">
+        .top {
+            background-color: #fff;
+            border-bottom: 1px solid #EEEEEE;
+            z-index: 100;
+            width: 100%;
+            margin-bottom: 5px;
+            height: 46px;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .topname {
+            line-height: 46px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 50%;
+            text-align: center;
+            color: #000;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+    <script>
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var topindex = parent.layer.getFrameIndex(window.name);
+
+            $().ready(function () {
+
+                $(document).on("click", '#btnClose', function () {
+                    parent.layer.close(topindex);
+                });
+
+            });
+        });
+    </script>
+</head>
+<body style="background:#DBF0FB;">
+    <div class="top">
+        <div style="float:left; line-height:46px;width:50%;" id="btnClose">
+            <i class="layui-icon" style=" color:#000; margin-left:12px; font-size:18px;  font-weight:bold;">&#xe603;</i>
+        </div>
+        <font class="topname" id="platform_title">
+            Platform
+        </font>
+        <div style="float:right; text-align:right; line-height:46px;width:50%;">
+        </div>
+    </div>
+    <div class="layui-form layui-tab-content" style="padding:2px; margin-top:50px;">
+        <div style="margin:5px; text-align:center;">
+            <div style=" background:#fff; ">
+                <div style="margin: 10px;line-height:20px; color:#000;  height:auto; overflow:hidden; text-align:left;margin-top:0px; border-radius: 5px !important;">
+                    <div style="padding-top:5px;">
+                        <img src="../../img/Platform.png" style="width:100%;" />
+                    </div>
+                    <div style="padding-top:5px;">
+                        <p style="margin-bottom: 15PX; font-size: 12px;">
+                            Hello, 5G Era
+                        </p>
+                        <p style="margin-bottom: 15PX; font-size: 12px;">
+                            We are a 5G base station sharing construction company under Qualcomm, and we have prepared various models of products for you. Users can cooperate to purchase base stations, and base station revenue will be distributed according to the investment ratio. Different base stations will offer different rewards. The platform will run in Nigeria for 8 months. After the equipment expires, you can re-invest and continue to earn income.
+                        </p>
+                        <p style="margin-bottom: 15PX; font-size: 12px;">
+                            After investing in equipment, the income will be distributed every 24 hours. After 24 hours, your income will automatically reach your account balance. The working time of the equipment is 35 days, and the income will stop after the expiration.
+                        </p>
+                        <p style="margin-bottom: 15PX; font-size: 12px;">
+                            1. Withdrawal time: 7X24 (no withdrawal time limit).<br />
+                            2. No withdrawal fees, no hidden fees for withdrawals.<br />
+                            3. There is no limit to the number of withdrawals per day. You can withdraw unlimited times every day.<br />
+                        </p>
+                        <p style="margin-bottom: 15PX; font-size: 12px;">
+                            You can also share your invite link to create your own team.
+                        </p>
+
+                        <p style="margin-bottom: 15PX; font-size: 12px;">
+                            Invite friends to invest, and you will directly get 30% cash back. The promotion bonus will be sent to your account balance immediately after your friends invest.
+                        </p>
+
+                        <p style="margin-bottom: 15PX; font-size: 12px;">
+                            1. Your level 1 team member (B) invests and you will get 30% cashback.<br />
+                            2. Your level 2 team members (C) invest and you will get 3% cashback.<br />
+                            3. Your level 3 team members (D) invest and you will get 1% cash back.<br />
+                        </p>
+                        <p style="margin-bottom:15PX; font-size:12px;">
+                            Example:<br />
+                            You are A, the person you invited is B, and B invests 100,000NGN, you will directly receive a cash reward of 30,000NGN, which will be sent directly to your account balance.<br />
+                            The person invited by B is C, and C invests 100,000NGN, and you will directly receive a cash reward of 3,000NGN, which will be sent directly to your account balance.<br />
+                            The person C invited is D, and D invests 100,000NGN, and you will directly receive a cash reward of 1,000NGN, which will be sent directly to your account balance.<br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/porp/Platform.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:35 GMT -->
+</html>

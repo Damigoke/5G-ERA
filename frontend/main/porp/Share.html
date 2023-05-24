@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/porp/Share.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:55 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Paylaşmak</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../Lay/layui.js"></script>
+    <link href="../../Lay/css/layui.css" rel="stylesheet" />
+    <script src="../../js/clipboard.min.js"></script>
+    <script src="../../js/comm.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../Lay/lay/modules/i18n.js"></script>
+    <style type="text/css">
+        .top {
+            background-color: rgb(6,170,251);
+            /*border-bottom: 1px solid #EEEEEE;*/
+            z-index: 100;
+            width: 100%;
+            margin-bottom: 5px;
+            height: 46px;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .topname {
+            line-height: 46px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 50%;
+            text-align: center;
+            color: #fff;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+    <script>
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var topindex = parent.layer.getFrameIndex(window.name);
+
+
+            $().ready(function () {
+                getuserinfo();
+
+                var clipboard = new ClipboardJS('#copy');
+                clipboard.on('success', function (e) {
+                    error("Copy successfully");
+                });
+
+                var clipboard1 = new ClipboardJS('#copy1');
+                clipboard1.on('success', function (e) {
+                    error("Copy successfully");
+                });
+
+                function getuserinfo() {
+                    var index = layer.load();
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "getuserinfo",
+                        time: Math.random()
+                    };
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                $("#shareurl").html("../../reg9561.html?code=" + json.JsonResult.invitation);
+                                $("#shareurl1").html("The newly launched money-making APP - a long-running platform! Earn up to 40% daily without any risk. Invite friends to invest and get 34% cash back. Minimum withdrawal 1200NGN. No withdrawal fee, no withdrawal time limit. Register to get 300NGN cash reward.<br/>https://5g-era.in/reg.html?code=" + json.JsonResult.invitation);
+                                $("#copy").attr("data-clipboard-text", "../../reg9561.html?code=" + json.JsonResult.invitation);
+                                $("#copy1").attr("data-clipboard-text", "The newly launched money-making APP - a long-running platform! Earn up to 40% daily without any risk. Invite friends to invest and get 34% cash back. Minimum withdrawal 1200NGN. No withdrawal fee, no withdrawal time limit. Register to get 300NGN cash reward.\r\n https://5g-era.in/reg.html?code=" + json.JsonResult.invitation);
+                            }
+                            CommAlert(json);
+                            layer.close(index);
+                        });
+                }
+            });
+
+            $(document).on("click", '#btnClose', function () {
+                parent.layer.close(topindex);
+            });
+
+        });
+    </script>
+</head>
+<body style="background:#DBF0FB;">
+    <div class="top">
+        <div style="float:left; line-height:46px;width:50%;" id="btnClose">
+            <i class="layui-icon" style=" color:#fff; margin-left:12px; font-size:18px;  font-weight:bold;">&#xe603;</i>
+        </div>
+        <font class="topname" id="share_title">
+            To share
+        </font>
+        <div style="float:right; text-align:right; line-height:46px;width:50%;">
+        </div>
+    </div>
+    <div class="layui-form layui-tab-content" style=" margin-top:46px;background: linear-gradient(180deg, rgb(6,170,251),#DBF0FB);">
+        <div style="margin:10px; text-align:center;background: #fff;
+    border-radius: 5px;
+    padding: 30px 15px;
+    position: relative;
+    z-index: 999;">
+            <div style="width:35%; margin:0 auto; margin-top:10px; ">
+                <img src="../../img/logo_user.png" style="width:100%;" />
+            </div>
+            <div style="width: 100%; text-align: center; margin-top: 10px;">
+                <div style="padding: 15px; font-weight: bold;">
+                    <em>Share this invite link, when someone signs up and invests through your invite link, you will get 30% cashback.</em>
+                </div>
+            </div>
+            <!--<div style="margin-top:10px;">
+                <img src="/ashx/QRcode.ashx" id="erweicode" style="  height:200px; height:200px;margin:0 auto; margin:5px;border-radius: 2px !important;" />
+            </div>-->
+            <div style="width: 100%; text-align: center; margin-top: 0px; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); border-radius: 10px;">
+                <div style="padding:25px;">
+                    <em id="shareurl"></em>
+                </div>
+            </div>
+            <div style="width:100%; text-align:center;margin-top:20px;">
+                <input class="layui-btn " id="copy" value="Copy" style="width: 95%; font-weight: 700; border: 0px; box-shadow: 0 0.8vw 2.667vw 1px rgb(0 0 0 / 36%); background-image: linear-gradient(to right, rgb(6,170,251), rgb(73,74,226)); font-size: 14px; border-radius: 25px; padding: 0 0px; " type="button" />
+            </div>
+            <div style="width: 100%; text-align: center; margin-top: 30px;">
+                <div style="padding:15px; font-weight:bold;">
+                    <em> Suggested content to share</em>
+                </div>
+            </div>
+            <div style="width: 100%; text-align: center; margin-top: 0px; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); border-radius: 10px;">
+                <div style="padding:20px;">
+                    <em id="shareurl1" style="font-size:12px;">
+
+
+                    </em>
+                </div>
+            </div>
+            <div style="width:100%; text-align:center;margin-top:20px;">
+                <input class="layui-btn " id="copy1" value="Copy" style="width: 95%; font-weight: 700; border: 0px; box-shadow: 0 0.8vw 2.667vw 1px rgb(0 0 0 / 36%); background-image: linear-gradient(to right, rgb(6,170,251), rgb(73,74,226)); font-size: 14px; border-radius: 25px; padding: 0 0px; " type="button" />
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/porp/Share.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:55 GMT -->
+</html>

@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/porp/Extract.html?time= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:55 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Almak</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../Lay/layui.js"></script>
+    <link href="../../Lay/css/layui.css" rel="stylesheet" />
+    <script src="../../js/comm.js"></script>
+    <style type="text/css">
+        .top {
+            background-color: #fff;
+            border-bottom: 1px solid #EEEEEE;
+            z-index: 100;
+            width: 100%;
+            margin-bottom: 5px;
+            height: 46px;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .topname {
+            line-height: 46px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 50%;
+            text-align: center;
+            color: #000;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        div#div1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: -1;
+        }
+
+            div#div1 > img {
+                height: 100%;
+                width: 100%;
+                border: 0;
+            }
+
+        .inputdiv {
+            display: flex;
+            border: 1px solid #D2D2D2 !important;
+            background-color: #fff;
+            height: 38px;
+            line-height: 38px;
+            padding: 0px 19px;
+            border-radius: 5px;
+            color: #000;
+        }
+
+        .layui-input {
+            border-style: none;
+        }
+    </style>
+    <script>
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var topindex = parent.layer.getFrameIndex(window.name);
+
+            $().ready(function () {
+                userinfo();
+                function diaoyong() {
+                    parent.upuserinfo();
+                }
+
+                function userinfo() {
+                    var index = layer.load();
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "getuserinfo",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = false;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                $("#Balance").html(json.JsonResult.income_amount);
+                            }
+                            CommAlert(json);
+                            layer.close(index);
+                        });
+                }
+
+                $("#change").click(function () {
+                    var url = "Paypassword07cc.html?time" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 2,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $("#Submit").click(function () {
+                    var index = layer.load();
+                    var amount = $("#Cash").val();
+                    var paypassword = $("#paypassword").val();
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "Extract",
+                        amount: amount,
+                        paypassword: paypassword,
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = false;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                error(json.JsonResult);
+                                diaoyong();
+                                setTimeout(function () {
+                                    parent.layer.close(topindex);
+                                }, 1000);
+                            }
+                            CommAlert(json);
+                            layer.close(index);
+                        });
+                });
+
+                $("#btnClose").click(function () {
+                    parent.layer.close(topindex);
+                });
+            });
+        });
+    </script>
+</head>
+<body style="background:#DBF0FB;">
+    <div class="top">
+        <div style="float:left; line-height:46px;width:50%;" id="btnClose">
+            <i class="layui-icon" style=" color:#000; margin-left:12px; font-size:18px;  font-weight:bold;">&#xe603;</i>
+        </div>
+        <font class="topname" id="extract_title">
+            Almak
+        </font>
+        <div style="float:right; text-align:right; line-height:46px;width:50%;">
+        </div>
+    </div>
+
+    <div style="width:95%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); margin-top:55px; padding-top:10px; padding-bottom:10px;  border-radius:5px;  margin-bottom:10px;  height:auto; overflow:hidden;">
+        <div style="margin:10px; text-align:center; height:80px; border-radius:5px;">
+            <div style="color: #afb6bd; padding-top:15px;">
+                <span id="recharge_txt1">Dengem</span>
+                <div style="color:#000;padding-top:10px; font-size:19px; font-weight:700; " id="Balance">0.00</div>
+            </div>
+        </div>
+    </div>
+    <div style="width:95%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); margin-top:2px; padding-top:10px; padding-bottom:10px;border-radius:5px;height:auto; overflow:hidden;">
+        <div class="layui-form">
+            <div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+                <div style="width: 95%; margin:0 auto;margin-top:10px;">
+                    <div class="inputdiv">
+                        <div style="width:15px;">
+                            ₦
+                        </div>
+                        <input type="number" id="Cash" oninput="if(value.length>10)value=value.slice(0,10)" style="font-size:12px;" placeholder="Lütfen çevrimiçi şarj miktarını girin" class="layui-input" autocomplete="off">
+                    </div>
+                </div>
+
+                <div style="width: 95%; margin:0 auto;margin-top:10px;">
+                    <div class="inputdiv">
+                        <div style="width:15px;">
+                            <i class="layui-icon layui-icon-password"></i>
+                        </div>
+                        <input type="password" id="paypassword" maxlength="20" style="font-size:12px;" placeholder="Lütfen ödeme şifresini girin" autocomplete="off" class="layui-input" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+                <div style="width:95%;margin:0 auto; text-align:left; font-size:12px;">
+                    <font style="float:left;font-size:12px;">&nbsp;&nbsp;Ödeme şifresi giriş şifresi ile aynıdır</font>
+                </div>
+            </div>
+            <div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+                <div style="width:95%;margin:0 auto; text-align:left; font-size:12px;">
+                    <font style="float: right; color: blue;   text-decoration: underline;" id="change">Ödeme şifresini değiştir</font>
+                </div>
+            </div>
+            <div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+                <input class="layui-btn" id="Submit" value="Çekilebilir bakiyeye bakiye transferi" style="width:95%;border:0px; margin:0 auto;  background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226)); border-radius: 25px;" type="button" />
+            </div>
+        </div>
+    </div>
+    <!--<div class="layui-form layui-tab-content" style="padding:5px 10px; margin-top:46px;">-->
+
+        <!--<div class="layui-tab-item layui-show">
+                <div class="layui-form layui-form-pane">
+                    <form class="layui-form">
+                        <div class="layui-form-item" style="height:48px;">
+                            <label class="layui-form-label" id="extract_txt3">Dengem</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="Balance" style="color:#117546; font-weight:700; " value="" readonly="readonly" autocomplete="off" class="layui-input" />
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="height:48px;">
+                            <label class="layui-form-label" id="extract_txt4">Çekim Tutarı</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="Cash" maxlength="20" style="color:#0062CC;" placeholder="Lütfen transfer tutarınızı girin" autocomplete="off" class="layui-input" />
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="height:48px;">
+                            <label class="layui-form-label" id="extract_txt6">Parola</label>
+                            <div class="layui-input-inline">
+                                <input type="password" id="paypassword" maxlength="20" style="color:#0062CC;" placeholder="Lütfen ödeme şifresini girin" autocomplete="off" class="layui-input" />
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="height:48px; font-size:12px; ">
+                            <label class="layui-form-label" style="width:100%;  text-align:left;">
+                                <font style="float:left;font-size:12px;" id="extract_txt8">Ödeme şifresi giriş şifresi ile aynıdır</font>
+                            </label>
+                            <label class="layui-form-label" style="width:100%; border-width: 0px;
+        border-style: solid;
+        border-radius: 2px 0 0 2px;text-align:left;">
+                                <font style="float: right; color: blue; text-decoration: underline; " id="change">Ödeme şifresini değiştir</font>
+                            </label>
+                        </div>
+                        <div class="layui-form-item">
+                            <input class="layui-btn" id="Submit" value="Çekilebilir bakiyeye bakiye transferi" style="width:100%;border:0px; margin-top:25px; background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226)); border-radius: 25px;" type="button" />
+                        </div>
+                    </form>
+                </div>
+            </div>-->
+    <!--</div>-->
+</body>
+
+<!-- Mirrored from 5g-era.in/main/porp/Extract.html?time= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:55 GMT -->
+</html>

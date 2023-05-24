@@ -1,0 +1,71 @@
+﻿.nav {
+    width: 100%;
+    border-top: 1px solid #EEEEEE;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    background-color: #f7f7f7;
+    z-index: 100;
+    text-align: center;
+}
+
+    .nav a {
+        /*font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif;*/
+        display: inline-block;
+        width: 24%;
+        
+        font-size:18px;
+        height: 46px;
+        line-height: 18px;
+        text-align: center;
+        color: #929292;
+        margin-top:8px;
+    }
+
+        .nav a span:nth-child(3) {
+            font-size: 12px;
+        }
+
+
+.top {
+    background-color: #008ac3;
+    border-bottom: 1px solid #EEEEEE;
+    z-index: 100;
+    width: 100%;
+    margin-bottom: 5px;
+    height: 50px;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+}
+
+.btn {
+    width: 100%;
+    border-width: 1px;
+    border-color: #e6e6e6;
+    border-style: solid;
+    border-radius: 5px;
+    box-shadow: 0 5px 5px 0 rgb(0 0 0 / 10%);
+}
+
+.btn1 {
+    width: 100%;
+    border-width: 1px;
+    border-color: #d3cfcf;
+    border-style: solid;
+    border-radius: 5px;
+    box-shadow: 0 5px 5px 0 rgb(0 0 0 / 10%);
+}
+
+
+body .demo .layui-layer-content {
+    position: relative;
+    text-align: center;
+    background-color: green;
+    color: #fff;
+    word-break: break-all;
+    overflow: hidden;
+    font-size: 14px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}

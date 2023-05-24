@@ -1,0 +1,411 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/Investment.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:35 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Investment</title>
+    <link href="../Lay/css/layuicb0c.css?v1.2" rel="stylesheet" />
+    <link href="../css/stylecb0c.css?v1.2" rel="stylesheet" />
+    <link href="../css/maincb0c.css?v1.2" rel="stylesheet" />
+    <script src="../Lay/layuicb0c.js?v1.2"></script>
+    <script src="../js/commcb0c.js?v1.2"></script>
+    <script>
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'layedit', 'laydate', 'layer', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var form = layui.form;
+            var element = layui.element;
+            var $ = layui.jquery, layer = layui.layer;
+            var cookie = layui.cookie;
+
+            var topindex = parent.layer.getFrameIndex(window.name);
+            $().ready(function () {
+                //checklanguage();
+                getproductdata()
+                getproductlist();
+
+                window.upuserinfo = function () {
+                    getproductdata()
+                    getproductlist();
+                    var url = "porp/Investmentorder77e6.html?time=" + Math.random();
+                    top.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 2,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                };
+
+                function getproductlist() {
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "productlist",
+                        time: Math.random()
+                    };
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                var html = "";
+                                var txt5 = $("#investment_txt5").val();
+                                var txt6 = $("#investment_txt6").val();
+                                for (var i = 0; i < json.JsonResult.length; i++) {
+                                    if (i % 2 == 0)
+                                        html += "<div style=\"float:left;overflow:hidden;width:49%;background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC);border-radius:5px;margin-top:5px;\" value='" + json.JsonResult[i].id + "' class='buy'>";
+                                    else
+                                        html += "<div style=\"float:left;overflow:hidden;width:49%;background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); margin-left:2%; margin-top:5px;border-radius:5px; \" value='" + json.JsonResult[i].id + "' class='buy'>";
+
+                                    html += "<div style=\" line-height:30px;font-weight: 700;color: #000;padding:15px;padding-bottom:0px;overflow:hidden;\">";
+                                    if (json.JsonResult[i].islock == "1") {
+                                        html += "<div class='content gray' style=\"background: url(" + json.JsonResult[i].imgurl + "); background-size: cover; width:100%;height:0; padding-bottom: 100%; border-radius:5px; \" >";
+                                        html += "<img src=\"/img/lock.png\" style=\"height:50px; position: absolute;bottom: 0;left:0;right:0;top:0;margin: auto;\" class='gray'/></div>";
+                                    }
+                                    else
+                                        html += "<div class='content' style=\"background: url(" + json.JsonResult[i].imgurl + "); background-size: cover; width:100%;height:0; padding-bottom: 100%;border-radius:5px; \" ></div>";
+
+                                    html += "</div>";
+                                    html += "<div style=\"height:35px; line-height:17px;font-weight: 500;font-size: 12px; font-weight: 550;padding:15px;padding-bottom:0px; padding-top:5px;\">";
+                                    html += json.JsonResult[i].name + "";
+                                    html += "</div>";
+                                    html += "<div style=\"height:20px; width:80%;line-height:20px;font-size: 12px;padding-left:15px; font-weight: 500;display: inline-block; \">";
+                                    html += "Cycle:<font style='color:#117546'>" + json.JsonResult[i].day + " days</font>";
+                                    html += "</div>";
+                                    html += "<div style=\"height:20px; width:80%;line-height:20px;font-size: 12px;padding-left:15px; font-weight: 500;display: inline-block; \">";
+                                    html += "Day income:<font style='color:#117546'>₦" + json.JsonResult[i].day_price + "</font>";
+                                    html += "</div>";
+                                    html += "<div style=\"height:20px; width:80%;line-height:20px;font-size: 12px;padding-left:15px; font-weight: 500;display: inline-block; \">";
+                                    html += "Total income:<br><font style='color:#117546'>₦ " + json.JsonResult[i].total_income + "</font>";
+                                    html += "</div>";
+                                    html += "<div style=\"height:30px; line-height:30px;padding-left:15px;padding-right:15px;\">";
+                                    html += "<div style=\"float:left; width:80%;\">";
+                                    html += "<div style=\"font-size: 12px;\">Price：<font style='color:#117546;font-weight:bold;'>₦ " + json.JsonResult[i].price + "</font></div>";
+                                    html += "</div>";
+                                    html += "<div style=\"float:left; width:20%;text-align:right;\">";
+                                    if (json.JsonResult[i].islock == "1")
+                                        html += "<img src=\"/img/j.png\" style=\"height:22px;\" class='gray ' value='" + json.JsonResult[i].id + "' />";
+                                    else
+                                        html += "<img src=\"/img/j.png\" style=\"height:22px;\"  value='" + json.JsonResult[i].id + "' />";
+                                    html += "</div>";
+                                    html += "</div>";
+                                    html += "</div>";
+                                }
+                                $("#productlist").html(html);
+                            }
+                            CommAlert(json);
+                        });
+                }
+
+                function getproductdata() {
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "productdata",
+                        time: Math.random()
+                    };
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                $("#productcount").html(json.JsonResult.productcount);
+                                $("#myincome").html("₦ " + json.JsonResult.myincome);
+                            }
+                            CommAlert(json);
+                        });
+                }
+
+
+
+
+                $(document).on("click", '.buy', function () {
+                    var value = $(this).attr("value");
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "checkbuy",
+                        id: value,
+                        time: Math.random()
+                    };
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                //error(json.JsonResult);
+                                //getproductdata()
+                                //getproductlist();
+                                var url = "porp/buyorder5445.html?id=" + value + "&time=" + Math.random();
+                                parent.layer.open({
+                                    type: 2,
+                                    title: false,
+                                    area: ['100%', '60%'],
+                                    offset: 'b',
+                                    shadeClose: true,
+                                    isOutAnim: false,
+                                    closeBtn: 0,
+                                    anim: 5,
+                                    shade: [0.8, '#393D49'],
+                                    maxmin: false,
+                                    content: url
+                                });
+                            }
+                            if (json.State == "301") {
+                                var main_prop_txt1 = "";//$("#main_prop_txt1").val();
+                                var main_prop_txt2 = "<div style=' text-align:center; width:100%; margin-top:20px;'>" + json.JsonResult + "</div>";
+                                var main_prop_txt3 = "OK";
+                                var html = "<div style=\"padding: 30px; padding-top:5px; font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif; line-height:25px;\">";
+                                html += '<div style=\"width:100%;font-weight:bold; text-align:center;\"><img src="/img/notice.png" style="width:45px;magin:0 auto;"></div><div style=\"width:100%;font-weight:bold; text-align:center; padding-bottom:10px;\">' + main_prop_txt1 + '</div>' + main_prop_txt2 + '';
+                                //html += '<div style=\"width:100%; text-align:center;\">';
+                                //html += '<input class="layui-btn" id="Logout" value="OK" style="width:50%; font-weight:700; font-size: 16px; display: inline-block;  background:#117546; border-radius: 5px;" type="button">';
+                                //html += '</div>';
+                                html += '</div>';
+
+                                var tishi = layer.open({
+                                    type: 1,
+                                    title: false,
+                                    closeBtn: 0,
+                                    shadeClose: false,
+                                    btn: [main_prop_txt3],
+                                    area: '75%',
+                                    content: html
+                                    , yes: function () {
+                                        var url = "porp/Recharge77e6.html?time=" + Math.random();
+                                        top.layer.open({
+                                            type: 2,
+                                            title: false,
+                                            area: ['100%', '100%'],
+                                            shadeClose: true,
+                                            isOutAnim: false,
+                                            closeBtn: 0,
+                                            anim: 2,
+                                            shade: [0.8, '#393D49'],
+                                            maxmin: false,
+                                            content: url
+                                        });
+                                        layer.close(tishi);
+                                    }
+                                });
+                            }
+                            CommAlert(json);
+                        });
+
+                });
+
+                $(document).on("click", '#invitation', function () {
+                    var url = "porp/Investmentorder77e6.html?time=" + Math.random();
+                    top.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $(document).on("click", '#online', function () {
+                    var url = "porp/Online77e6.html?time=" + Math.random();
+                    top.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $(document).on("click", '#about5g', function () {
+                    var url = "porp/about5g77e6.html?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+
+                $(document).on("click", '#Investmentorder', function () {
+                    var url = "porp/Investmentorder77e6.html?time=" + Math.random();
+                    top.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+
+            });
+        });
+    </script>
+    <style type="text/css">
+        .announcement-title {
+            float: left;
+            width: 50%;
+            text-align: left;
+            font-size: 20px;
+            font-weight: 500;
+            color: #434343;
+        }
+
+        .content div:before {
+            content: "";
+            display: inline-block;
+            padding-bottom: 100%;
+        }
+
+        .gray {
+            /*grayscale(val):val值越大灰度就越深*/
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+            filter: gray;
+        }
+
+        layer-page .layui-layer-btn {
+            padding-top: 0px !important;
+        }
+
+        .layui-layer-btn {
+            text-align: center !important;
+            padding: 0 0px 12px;
+            pointer-events: auto;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+            .layui-layer-btn a {
+                margin: 5px 5px 0;
+                padding: 0 0px !important;
+                height: 28px;
+                line-height: 28px;
+                text-align: center;
+                width: 50%;
+                border: 1px solid #dedede;
+                background-color: #fff;
+                color: #333;
+                border-radius: 2px;
+                font-weight: 400;
+                cursor: pointer;
+                text-decoration: none;
+                border-radius: 20px !important;
+            }
+
+        .layui-layer-page {
+            border-radius: 20px !important;
+        }
+
+        .layui-layer-btn .layui-layer-btn0 {
+            border-color: #117546 !important;
+            border: 0px;
+            background-image: linear-gradient(to right, rgb(6,170,251), rgb(73,74,226)) !important;
+            color: #fff;
+        }
+    </style>
+</head>
+<body style="background-color: #DBF0FB;">
+    <input type="hidden" id="investment_txt5" value="" />
+    <input type="hidden" id="investment_txt6" value="" />
+    <div class="top" style="height:50px; background:#f7f7f7;">
+        <div style="float:left; text-align:left;  ">
+            <img src="../img/main_logo.png" style=" margin-left:10px; height:37px; margin-top:7px;" />
+        </div>
+        <div style="float:right;  text-align:right; line-height:50px; width:25%">
+            <img src="../img/kefu.png" style="height:25px;margin-right:20px; " id="online" />
+        </div>
+    </div>
+
+    <div style="width:100%; margin-top:60px; padding-bottom:80px; height:auto; overflow:hidden;">
+        <div style="width:95%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); padding-top:10px; padding-bottom:10px;border-radius:3px;">
+            <div style="margin-top:0px; height:50px;">
+                <div class="announcement-title">
+                    <div style="padding:15px;font-weight: 700;font-size: 18px;" id="investment_txt1">Device</div>
+                </div>
+                <div style="float:left;width:50%; ">
+                    <div id="invitation" style="height: 40px; width: 100%; margin-top:5px; color: #fff; line-height: 40px; float: right; font-weight: 700; margin-right: 15px; border-radius: 25px 25px 25px 25px; background-image: linear-gradient(to right, rgb(6,170,251), rgb(73,74,226));">
+                        <img src="../images/shop.png" style="height:25px; margin-left:18px; margin-right:8px;" /> <span>View my device</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="width:95%;  margin:0 auto;  padding-bottom:10px;border-radius:10px;margin-top:5px;">
+            <img src="../img/main.png" style="width:100%; " />
+        </div>
+        <div style="width:95%; margin:0 auto;   padding-top:5px; padding-bottom:10px;border-radius:10px; height:95px;">
+            <div style="float:left;width:49%;background:linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC);border-radius:5px;" id="Investmentorder">
+                <div style="height: 20px; line-height: 20px; font-weight: 700; color: #000; font-size: 12px; padding: 10px; padding-left: 15px;">
+                    <img src="../img/c1.png" style="height:22px; margin-right:10px;" />Equipment Quantity
+                </div>
+                <div style="height: 30px; line-height: 30px; font-weight: 500; font-size: 16px; padding: 15px; padding-left: 20px;">
+                    <div style="float:left; width:100%;">
+                        <div style=" color: #000; font-size: 20px; font-weight: bold;" id="productcount">0</div>
+                    </div>
+                </div>
+            </div>
+            <div style="float:left;width:49%; margin-left:2%;background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC);border-radius:5px;">
+                <div style="height: 20px; line-height: 20px; font-weight: 700; color: #000; font-size: 12px; padding: 10px; padding-left: 5px; ">
+                    <img src="../img/d1.png" style="height:22px; margin-left:10px; margin-right:10px;" />Equipment Income
+                </div>
+                <div style="height: 30px; line-height: 30px; font-weight: 500; font-size: 16px; padding: 15px; padding-left: 20px; ">
+                    <div style="float:left; width:100%;">
+                        <div style=" color: #000; font-size: 18px; font-weight: bold;" id="myincome">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="width:95%; margin:0 auto;  padding-bottom:10px;border-radius:10px;" id="productlist">
+            
+
+        </div>
+    </div>
+
+    <nav class="nav">
+        <a href="main.html">
+            <img src="../img/nav/11.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn1">House</span>
+        </a>
+        <a style="color: rgb(69,158,248); font-weight: bold;">
+            <img src="../img/nav/2.png" style="width:28px;" /><br />
+            <span id="nav_btn2">Investment</span>
+        </a>
+        <a href="Profit.html">
+            <img src="../img/nav/33.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn3">Team</span>
+        </a>
+        <a href="Personal.html">
+            <img src="../img/nav/44.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn4">Personal</span>
+        </a>
+    </nav>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/Investment.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:35 GMT -->
+</html>

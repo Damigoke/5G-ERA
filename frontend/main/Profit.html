@@ -1,0 +1,345 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/Profit.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:35 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Team</title>
+    <link href="../Lay/css/layuicb0c.css?v1.2" rel="stylesheet" />
+    <link href="../css/maincb0c.css?v1.2" rel="stylesheet" />
+    <script src="../Lay/layuicb0c.js?v1.2"></script>
+    <script src="../js/commcb0c.js?v1.2"></script>
+    <script>
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'layedit', 'laydate', 'layer', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var form = layui.form;
+            var element = layui.element;
+            var $ = layui.jquery, layer = layui.layer;
+            var cookie = layui.cookie;
+            var topindex = parent.layer.getFrameIndex(window.name);
+            $().ready(function () {
+                getuserinfo();
+
+                function getuserinfo() {
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "getuserinfo",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = true;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                $("#task1_count").html(json.JsonResult.task1_count);
+                                $("#task1_income").html(json.JsonResult.task1_income);
+                                $("#task1_invation").html(json.JsonResult.task1_invation);
+
+                                $("#task2_count").html(json.JsonResult.task2_count);
+                                $("#task2_income").html(json.JsonResult.task2_income);
+                                $("#task2_invation").html(json.JsonResult.task2_invation);
+
+                                $("#task3_count").html(json.JsonResult.task3_count);
+                                $("#task3_income").html(json.JsonResult.task3_income);
+                                $("#task3_invation").html(json.JsonResult.task3_invation);
+
+                                $("#all_count").html(json.JsonResult.all_count);
+                                $("#all_income").html(json.JsonResult.all_income);
+                            }
+                            CommAlert(json);
+                        });
+                }
+
+                $(document).on("click", '#teaminfo', function () {
+                    var url = "porp/teaminfo77e6.html?time=" + Math.random();
+                    top.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                
+
+                $(document).on("click", '#invitation', function () {
+                    var url = "porp/Share77e6.html?time=" + Math.random();
+                    top.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+               
+
+                $(document).on("click", '#online', function () {
+                    var url = "porp/Online77e6.html?time=" + Math.random();
+                    top.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $(document).on("click", '#btnClose', function () {
+                    top.layer.close(topindex);
+                });
+            });
+        });
+    </script>
+    <style type="text/css">
+        .announcement-title {
+            float: left;
+            width: 50%;
+            text-align: left;
+            font-size: 20px;
+            font-weight: 500;
+            color: #434343;
+        }
+
+        .gray {
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+            filter: gray;
+        }
+    </style>
+</head>
+<body style="background-color: #DBF0FB;">
+    <div class="top" style="height:50px; background:#f7f7f7;">
+        <div style="float:left; text-align:left;  ">
+            <img src="../img/main_logo.png" style=" margin-left:10px; height:37px; margin-top:7px;" />
+        </div>
+        <div style="float:right;  text-align:right; line-height:50px; width:25%">
+            <img src="../img/kefu.png" style="height:25px;margin-right:20px; " id="online" />
+        </div>
+    </div>
+
+    <div style="width:100%; margin-top:60px; margin-bottom:60px;">
+        <div style="width: 95%; margin: 0 auto; padding-top: 10px; border-radius: 5px; height: auto; overflow: hidden; ">
+            <div style="margin-top:0px; height:50px;">
+                <div class="announcement-title">
+                    <div style="padding:15px;font-weight: 700;font-size: 18px;" id="profit_txt1">Team data</div>
+                </div>
+                <div style="float:left;width:50%; ">
+                    <div id="invitation" style="height: 40px; margin-top: 2px; width: 150px; color: #fff; line-height: 40px; float: right; font-weight: 700; margin-right: 15px; border-radius: 25px 25px 25px 25px; background-image: linear-gradient(to right, rgb(6,170,251), rgb(73,74,226)); ">
+                        <img src="../img/j.png" style="height:25px; margin-left:20px; margin-right:10px;" /><span id="profit_txt2">Invitation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="teaminfo" style="width: 94%; margin: 0 auto; text-align:left; height: 45px;  line-height:45px; color: #fff; box-shadow: 0 0.8vw 2.667vw 1px rgb(0 0 0 / 36%); border-radius: 5px; background: linear-gradient(to right,rgb(6,170,251),rgb(73,74,226)); ">
+            <div style="float:left;width:70%"> <img src="../img/88.png" style=" margin-left: 15px; height: 25px;">  Team information</div>
+            <div style="float:left;width:30%; text-align:right;">
+                <img src="../img/jt.png" style=" margin-right: 25px; height: 17px;">
+            </div>
+            </div>
+
+        <div style="width:94%; margin:0 auto; margin-top:10px;background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); padding-top:10px; border-radius:5px; height:auto; overflow:hidden;  text-align:center;">
+            <div style="float:left;width:49%;border-radius:5px;">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 5px; font-size: 18px; color: #117546;" id="all_count">
+                    0
+                </div>
+                <div style="height: 25px; line-height: 25px; padding-top: 5px; padding-bottom: 10px; color: #000; ">
+                    Total number
+                </div>
+            </div>
+            <div style="float:left;width:49%; margin-left:2%;border-radius:5px;">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 5px; font-size: 18px; color: #117546;" id="all_income">
+                    0.00
+                </div>
+                <div style="height: 25px; line-height: 25px; color: #000; padding-top: 5px; padding-bottom: 10px; font-size: 14px;">
+                    Total Bonus
+                </div>
+            </div>
+        </div>
+
+        <div style="width:94%; margin:0 auto; margin-top:10px; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); border-radius:5px; height:auto; overflow:hidden;">
+            <div style="height: 20px; padding-left: 25px; padding-bottom: 10px; padding-top: 10px; background: linear-gradient(to right, rgb(73,74,226), rgb(6,170,251)); font-size: 14px; color: #fff; font-weight: 700; ">
+                <img src="../img/1.png" style="height:14px; margin-right:5px;" />  Level 1 user
+            </div>
+            <div style="float:left;width:33.33%;border-radius:5px; text-align:center; ">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 10px; font-size: 16px; color: #117546;" id="task1_count">
+                    0
+                </div>
+                <div style="height: 20px; line-height: 20px; padding-top: 5px; padding-bottom: 10px; color: #000; font-size: 12px; ">
+                    People
+                </div>
+            </div>
+            <div style="float: left; width: 33.33%; border-radius: 5px; text-align: center; ">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 10px; font-size: 16px; color: #117546; " id="task1_income">
+                    0.00
+                </div>
+                <div style="height: 20px; line-height: 20px; padding-top: 5px; padding-bottom: 10px; color: #000; font-size: 12px; ">
+                    Bonus
+                </div>
+            </div>
+            <div style="float: left; width: 33.33%; border-radius: 5px; text-align: center;">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 10px; font-size: 16px; color: #117546; " id="task1_invation">
+                    0.00
+                </div>
+                <div style="height: 20px; line-height: 20px; color: #000; padding-top: 5px; padding-bottom: 10px; font-size: 12px; ">
+                    Invest
+                </div>
+            </div>
+        </div>
+
+        <div style="width:94%; margin:0 auto; margin-top:10px; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); border-radius:5px; height:auto; overflow:hidden;">
+            <div style="height: 20px; padding-left: 25px; padding-bottom: 10px; padding-top: 10px; background: linear-gradient(to right, rgb(73,74,226), rgb(6,170,251)); font-size: 14px; color: #fff; font-weight: 700; ">
+                <img src="../img/2.png" style="height:14px; margin-right:5px;" /> Level 2 user
+            </div>
+            <div style="float:left;width:33.33%;border-radius:5px; text-align:center; ">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 10px; font-size: 16px; color: #117546; " id="task2_count">
+                    0
+                </div>
+                <div style="height: 20px; line-height: 20px; padding-top: 5px; padding-bottom: 10px; color: #000; font-size: 12px; ">
+                    People
+                </div>
+            </div>
+            <div style="float: left; width: 33.33%; border-radius: 5px; text-align: center; ">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 10px; font-size: 16px; color: #117546; " id="task2_income">
+                    0.00
+                </div>
+                <div style="height: 20px; line-height: 20px; padding-top: 5px; padding-bottom: 10px; color: #000; font-size: 12px; ">
+                    Bonus
+                </div>
+            </div>
+            <div style="float: left; width: 33.33%; border-radius: 5px; text-align: center;">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 10px; font-size: 16px; color: #117546; " id="task2_invation">
+                    0.00
+                </div>
+                <div style="height: 20px; line-height: 20px; color: #000; padding-top: 5px; padding-bottom: 10px; font-size: 12px; ">
+                    Invest
+                </div>
+            </div>
+        </div>
+
+        <div style="width:94%; margin:0 auto; margin-top:10px; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); border-radius:5px; height:auto; overflow:hidden;">
+            <div style="height: 20px; padding-left: 25px; padding-bottom: 10px; padding-top: 10px; background: linear-gradient(to right, rgb(73,74,226), rgb(6,170,251)); font-size: 14px; color: #fff; font-weight: 700; ">
+                <img src="../img/3.png" style="height:14px; margin-right:5px;" />  Level 3 user
+            </div>
+            <div style="float:left;width:33.33%;border-radius:5px; text-align:center; ">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 10px; font-size: 16px; color: #117546; " id="task3_count">
+                    0
+                </div>
+                <div style="height: 20px; line-height: 20px; padding-top: 5px; padding-bottom: 10px; color: #000; font-size: 12px; ">
+                    People
+                </div>
+            </div>
+            <div style="float: left; width: 33.33%; border-radius: 5px; text-align: center; ">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 10px; font-size: 16px; color: #117546; " id="task3_income">
+                    0.00
+                </div>
+                <div style="height: 20px; line-height: 20px; padding-top: 5px; padding-bottom: 10px; color: #000; font-size: 12px; ">
+                    Bonus
+                </div>
+            </div>
+            <div style="float: left; width: 33.33%; border-radius: 5px; text-align: center;">
+                <div style="height: 25px; line-height: 25px; font-weight: 700; padding-top: 10px; font-size: 16px; color: #117546; " id="task3_invation">
+                    0.00
+                </div>
+                <div style="height: 20px; line-height: 20px; color: #000; padding-top: 5px; padding-bottom: 10px; font-size: 12px; ">
+                    Invest
+                </div>
+            </div>
+        </div>
+
+        <div style="width:95%;position:relative;  margin:0 auto; margin-top:15px; margin-bottom:50px; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC);padding-top:10px; padding-bottom:10px;border-radius:10px; height:auto; overflow:hidden; ">
+            <div style="width:95%; margin:0 auto;  border-radius:10px;">
+                <div style="margin-top:0px; height:35px; line-height:23px;">
+                    <div>
+                        <div style="padding:5px; font-weight: 700;font-size: 18px;">Team Promotion Award</div>
+                    </div>
+                </div>
+            </div>
+            <div style=" height: auto; overflow: hidden; ">
+                <div style="padding: 10px; padding-left: 20px; color:#444;  font-size:12px; height: auto; overflow: hidden; ">
+                    Invite your friends to invest and you will get 30% cashback. <br />
+                    Your Level 2 team members invest and you get 3% cash back. <br />
+                    Your Level 3 team members invest and you get 1% cash back. <br /><br />
+                    The bonus will be sent to your account balance immediately after the referrer invests.<br /><br />
+                    <font style="color: red;">
+                        In order to protect the interests of other users of the 5G platform, you must first invest (at least 2500NGN) before you can start earning referral commissions.
+                    </font>
+                </div>
+            </div>
+        </div>
+
+        <!--<div style="width:95%;position:relative; margin:0 auto; margin-top:10px; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); padding-top:10px; padding-bottom:10px;border-radius:10px; height:auto; overflow:hidden; ">
+            <div style="height:50px;">
+                <div style="padding:5px; padding-left:10px;font-weight:bold;" id="profit_txt13">
+                    2. Invite a valid member (referring to the user who bought the base station), reward 40TL, no upper limit
+                </div>
+            </div>
+            <div style="height:35px;">
+                <div style="padding:5px; padding-left:10px;">
+                    <span id="profit_txt101">Recoverable amount：</span><span style="font-weight: 700; font-size: 18px;  color:#117546;" id="task2_income">0.00</span>
+                </div>
+            </div>
+            <div style="height:35px;">
+                <div style="padding:5px; padding-left:10px;">
+                    <span id="profit_txt111">Amount received：</span><span style="font-weight: 700;  font-size: 18px; color:#117546;" id="task2_income_lq">0.00</span>
+                </div>
+            </div>-->
+        <!--<div style="height:35px; padding-bottom:25px;">
+            <div style="padding:5px; padding-left:10px;">
+                <span id="profit_txt121">ödüllendirildi</span>：<br /><br />
+                <div class="layui-progress layui-progress-big" lay-showpercent="true">
+                    <div class="layui-progress-bar" style="background-color: #117546;" id="task2_count" lay-percent="0/200"></div>
+                </div>
+            </div>
+        </div>-->
+        <!--<div id="Receive2" style="display: none; text-align: center; height: 45px; width: 90px; color: #fff; position: absolute; right: 0px; top: 50px; line-height: 45px; float: right; font-weight: 700; border-radius: 25px 0px 0px 25px; background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226)); border:0px;">
+                To take
+            </div>
+        </div>-->
+    </div>
+
+    <nav class="nav">
+        <a href="main.html">
+            <img src="../img/nav/11.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn1">House</span>
+        </a>
+        <a href="Investment.html">
+            <img src="../img/nav/22.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn2">Investment</span>
+        </a>
+        <a style="color: rgb(69,158,248); font-weight: bold;">
+            <img src="../img/nav/3.png" style="width:28px;" /><br />
+            <span id="nav_btn3">Team</span>
+        </a>
+        <a href="Personal.html">
+            <img src="../img/nav/44.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn4">Personal</span>
+        </a>
+    </nav>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/Profit.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:37 GMT -->
+</html>

@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/porp/buyorder.html?id= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:42 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>buy equipment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../Lay/layui.js"></script>
+    <link href="../../Lay/css/layui.css" rel="stylesheet" />
+    <script src="../../js/comm7373.js?v1.4"></script>
+    <style type="text/css">
+        .top {
+            background-color: #fff;
+            border-bottom: 1px solid #EEEEEE;
+            z-index: 100;
+            width: 100%;
+            margin-bottom: 5px;
+            height: 46px;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .topname {
+            line-height: 46px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 50%;
+            text-align: center;
+            color: #000;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+
+    <script type="text/javascript">
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var topindex = parent.layer.getFrameIndex(window.name);
+
+            info();
+
+            function diaoyong() {
+                parent.upuserinfo();
+            }
+
+            $(document).on("click", '#qx', function () {
+                parent.layer.close(topindex);
+            });
+
+            function info() {
+                var value = getUrlParam1("id");
+                var url = "/ashx/BusServer.ashx";
+                var pm = {
+                    action: "producinfo",
+                    id: value,
+                    time: Math.random()
+                };
+                $.getJSON(url, pm,
+                    function (json) {
+                        if (json.State == "200") {
+                            $("#name").html(json.JsonResult.name);
+                            $("#day_price").html("₦ " + json.JsonResult.day_price);
+                            $("#total_income").html("₦ " + json.JsonResult.total_income);
+                            $("#price").html("₦ " + json.JsonResult.price);
+
+                            $("#day_price1").html("₦ " + json.JsonResult.day_price);
+
+                            var n = json.JsonResult.day_price * 1;
+                            var re = (n).toFixed(6);
+                            re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/))
+                            $("#img").attr("src", json.JsonResult.imgurl)
+
+
+                        }
+                        CommAlert(json);
+                    });
+            }
+
+            $(document).on("click", '#buy', function () {
+                var value = getUrlParam1("id");
+                var index = layer.load();
+                var url = "/ashx/BusServer.ashx";
+                var pm = {
+                    action: "buy",
+                    id: value,
+                    time: Math.random()
+                };
+                $.getJSON(url, pm,
+                    function (json) {
+                        if (json.State == "200") {
+                            error1(json.JsonResult);
+                            setTimeout(function () {
+                                diaoyong();
+                                parent.layer.close(topindex);
+                            }, 1000);
+                            //parent.layer.close(topindex);
+                        }
+                        if (json.State == "301") {
+                            var main_prop_txt1 = "";
+                            var main_prop_txt2 = "<div style=' text-align:center; width:100%; margin-top:20px;'>" + json.JsonResult + "</div>";
+                            var main_prop_txt3 = "Anladım";
+                            var html = "<div style=\"padding: 30px; padding-top:5px; font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif; line-height:25px;\">";
+                            html += '<div style=\"width:100%;font-weight:bold; text-align:center;\"><img src="/img/notice.png" style="width:45px;magin:0 auto;"></div><div style=\"width:100%;font-weight:bold; text-align:center; padding-bottom:10px;\">' + main_prop_txt1 + '</div>' + main_prop_txt2 + '';
+                            //html += '<div style=\"width:100%; text-align:center;\">';
+                            //html += '<input class="layui-btn" id="Logout" value="OK" style="width:50%; font-weight:700; font-size: 16px; display: inline-block;  background:#117546; border-radius: 5px;" type="button">';
+                            //html += '</div>';
+                            html += '</div>';
+                            var tishi = layer.open({
+                                type: 1,
+                                title: false,
+                                closeBtn: 0,
+                                shadeClose: false,
+                                btn: [main_prop_txt3],
+                                area: '75%',
+                                content: html
+                                , yes: function () {
+                                    var url = "Recharge77e6.html?time=" + Math.random();
+                                    top.layer.open({
+                                        type: 2,
+                                        title: false,
+                                        area: ['100%', '100%'],
+                                        shadeClose: true,
+                                        isOutAnim: false,
+                                        closeBtn: 0,
+                                        anim: 2,
+                                        shade: [0.8, '#393D49'],
+                                        maxmin: false,
+                                        content: url
+                                    });
+                                    layer.close(tishi);
+                                }
+                            });
+                        }
+                        CommAlert(json);
+                        layer.close(index);
+                    });
+            });
+        });
+    </script>
+</head>
+<body style="background:#DBF0FB;">
+
+    <div style="height:120px; width:95%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC);border-radius:5px; margin-top:10px;">
+        <div style="float:left; width:35%; line-height:120px; text-align:center;">
+            <img src="#" style="height: 100px; height: 100px; border-radius: 5px;" id="img" />
+        </div>
+        <div style="float:left; width:65%; line-height:20px; ">
+            <div style="margin-top:10px;font-weight:bold;color:#000;" id="name"></div>
+            <div style="font-size:12px;">Day income:<font style='color:#117546' id="day_price">₦ 0.00</font></div>
+            <div style="font-size:12px;">Total income:<font style='color:#117546' id="total_income">₦ 0.00</font></div>
+            <div style="font-size:12px;">Cycle：<font style='color:#117546' id="day">35</font> days</div>
+            <div style="font-size:12px;">Price：<font style='color:#117546' id="price">₦ 0.00</font></div>
+        </div>
+    </div>
+    <!--<div style="height:140px; width:95%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC);border-radius:5px; margin-top:10px;">
+        <div style="padding-left: 10px;padding-top:10px; padding-bottom: 10px; font-weight: bold; color: #08163C; ">Detailed description</div>
+        <div style="width:100%;height:25px;">
+            <span style="float:left; margin-left:3%;color:#808080;">hourly income</span>
+            <span style="float:right;margin-right:3%;color:#117546;font-weight:bold;" id="day_price1">₦ 15.00</span>
+        </div>
+        <div style="width:100%;height:25px;">
+            <span style="float:left;margin-left:3%;color:#808080;">daily earnings</span>
+            <span style="float:right;margin-right:3%;color:#117546;font-weight:bold;" id="price1">₦ 15.00</span>
+        </div>
+        <div style="width:100%;height:25px;">
+            <span style="float:left;margin-left:3%;color:#808080;">January income</span>
+            <span style="float:right;margin-right:3%;color:#117546;font-weight:bold;" id="price2">₦ 15.00</span>
+        </div>
+        <div style="width:100%;height:25px;">
+            <span style="float:left;margin-left:3%;color:#808080;">365 days of income</span>
+            <span style="float:right;margin-right:3%;color:#117546;font-weight:bold;" id="price3">₦ 15.00</span>
+        </div>
+    </div>-->
+    <div style="height:auto; width:95%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC);border-radius:5px; margin-top:10px;">
+        <div style="padding-left: 10px;padding-top:10px; padding-bottom: 10px; font-weight: bold; color: #08163C; ">Rules Introduction</div>
+        <div style="width:100%;">
+            <div style="padding: 10px; font-size:12px;">
+                Each user can purchase this device 20 times to increase the device income. After the expiration the device stops generating revenue.
+            </div>
+        </div>
+    </div>
+    <div style="height:auto; width:95%; margin:0 auto; border-radius:5px; margin-top:30px;">
+        <div style="width:100%;">
+            <div style="float: left; width: 45%;">
+                <input class="layui-btn" id="qx" value="Cancel" style="width: 100%; margin: 0 auto; box-shadow: 0 0.8vw 2.667vw 1px rgb(0 0 0 / 36%); border-radius: 25px; color: #000; background: #fff; border: 1px;" type="button" />
+            </div>
+            <div style="float: left; width: 45%; margin-left: 10%;">
+                <input class="layui-btn" id="buy" value="Buy" style="width: 100%; margin: 0 auto;  box-shadow: 0 0.8vw 2.667vw 1px rgb(0 0 0 / 36%); border-radius: 25px; border: 0px; background-image: linear-gradient(to right, rgb(6,170,251), rgb(73,74,226)); " type="button" />
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/porp/buyorder.html?id= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:43 GMT -->
+</html>

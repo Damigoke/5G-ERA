@@ -1,0 +1,113 @@
+﻿.divGride {
+    padding: 1px;
+    border: 1px solid #9EA0BF;
+    background-color: #EFF0F8;
+}
+
+    .divGride .title {
+        padding: 6px 12px;
+        background-color: #B7BAD6;
+        text-align: center;
+        border-bottom: 1px solid #9EA0BF;
+    }
+
+        .divGride .title span {
+            float: right;
+            line-height: 16px;
+        }
+
+    .divGride .grideCont {
+        padding: 40px 0 24px 0;
+    }
+
+.goodsPic {
+    float: left;
+    margin: 0 0 0 24px;
+    display: inline;
+}
+
+.infoList ul {
+    line-height: 2em;
+    font-size: 14px;
+}
+
+.infoList li .attribute {
+    padding: 6px 12px;
+    line-height: 22px;
+    background-color: #305F73;
+    margin: 12px 0;
+    width: 275px;
+    border: 3px double #94B8CD;
+    color: #fff;
+}
+
+.operateBtn {
+    margin: 24px 9px;
+    padding: 24px 0 12px;
+    border-top: 1px dotted #9EA0BF;
+}
+
+.goodsInfo {
+    margin-left: 162px;
+}
+
+    .goodsInfo .names {
+        border-bottom: 1px solid #9EA0BF;
+        padding: 0 0 6px;
+        color: #3366CC;
+        margin: 0 0 6px;
+    }
+
+.collect {
+    float: right;
+    margin: 6px 12px 0 0;
+    display: inline;
+}
+
+.comm, .coll {
+    padding-left: 22px;
+    line-height: 18px;
+    margin-right: 6px;
+}
+
+.equip_desc_red {
+    font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif;
+    color: #FF0000;
+}
+
+.equip_desc_green {
+    font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif;
+    color: #00FF00;
+}
+
+.equip_desc_blue {
+    font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif;
+    color: #C1C1FF;
+}
+
+.equip_desc_black {
+    color: #000000;
+    font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif;
+}
+
+.equip_desc_yellow {
+    color: #FFFF00;
+    font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif;
+}
+
+.equip_desc_white {
+    font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif;
+    color: #FFFFFF;
+}
+
+p {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+input {
+    font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif;
+}

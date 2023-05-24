@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/reg.html?code= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:47 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="Lay/css/layui.css">
+    <script src="Lay/layui.js"></script>
+    <script src="js/comm.js"></script>
+    <script>
+        var countdown = 120;
+        layui.use(['layedit', 'jquery', 'layer', 'cookie'], function () {
+            var $ = layui.jquery, layer = layui.layer;
+            var cookie = layui.cookie;
+            $().ready(function () {
+                oninv();
+            });
+
+            var ma = guid();
+
+            function S4() {
+                return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+            }
+
+            function guid() {
+                return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+            }
+            $("#ma").val(ma);
+            $("#verifyImg").attr("src", "/Include/valiCode.aspx?c=" + ma + "");
+            $("#verifyImg").click(function () {
+                var ma = guid();
+                $("#ma").val(ma);
+                $("#verifyImg").attr("src", "/Include/valiCode.aspx?c=" + ma + "");
+            });
+
+            function oninv() {
+                var code = getUrlParam1("code");
+                if (code != "") {
+                    var invcode = $.cookie('invcode');
+                    if (invcode != code) {
+                        $.cookie('invcode', code, { expires: 1 });
+                        $("#invitation").attr("readonly", "readonly");
+                        $("#invitation").val(code);
+                    } else {
+                        $("#invitation").attr("readonly", "readonly");
+                        $("#invitation").val(invcode);
+                    }
+                } else {
+                    var invcode = $.cookie('invcode');
+                    if (invcode != null)
+                        $("#invitation").attr("readonly", "readonly");
+                    $("#invitation").val(invcode);
+                }
+            }
+
+            $(document).on("click", '#sendcode', function () {
+                var moblie = $("#moblie").val();
+                $("#sendcode").addClass("layui-btn-disabled");
+                $('#sendcode').attr("disabled", true);
+                var index = layer.load();
+                var url = "/ashx/LoginServer.ashx";
+                var pm = {
+                    action: "sendphonecode",
+                    moblie: moblie,
+                    time: Math.random()
+                };
+                $.getJSON(url, pm,
+                    function (json) {
+                        if (json.State == "200") {
+                            error(json.JsonResult);
+                            settime();
+                        }
+                        if (json.State == "300") {
+                            error(json.JsonResult);
+                            $("#sendcode").removeClass("layui-btn-disabled");
+                            $('#sendcode').attr("disabled", false);
+                        }
+                        layer.close(index);
+                    });
+            });
+
+            function settime() { //发送验证码倒计时
+                if (countdown == 0) {
+                    $("#sendcode").removeClass("layui-btn-disabled");
+                    $('#sendcode').attr("disabled", false);
+                    $("#sendcode").val("Obtain");
+                    countdown = 120;
+                    return;
+                } else {
+                    $("#sendcode").addClass("layui-btn-disabled");
+                    $('#sendcode').attr("disabled", true);
+                    $('#sendcode').val("" + countdown + " second");
+                    countdown--;
+                }
+                setTimeout(function () {
+                    settime()
+                }, 1000)
+            }
+
+            $("#reg").click(function () {
+                var moblie = $("#moblie").val();
+                var code = $("#code").val();
+                var password = $("#password").val();
+                var password1 = $("#password1").val();
+                var invitation = $("#invitation").val();
+                var url = "/ashx/LoginServer.ashx";
+                var pm = {
+                    action: "reg",
+                    moblie: moblie,
+                    code: code,
+                    password: password,
+                    password1: password1,
+                    invitation: invitation,
+                    time: Math.random()
+                };
+                $.getJSON(url, pm,
+                    function (json) {
+                        if (json.State == "200") {
+                            location.href = "main/main77e6.html?time=" + Math.random();
+                        }
+                        if (json.State == "300") {
+                            error(json.JsonResult);
+                        }
+                    });
+            });
+
+
+            $("#btnClose").click(function () {
+                location.href = 'index77e6.html?time=' + Math.random();
+            });
+
+        });
+    </script>
+    <style>
+        .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+            margin-top: 4px;
+        }
+        .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+            margin-top: 2px;
+            padding-left: 22px;
+        }
+
+        .layui-form-item {
+            margin-bottom: 6px;
+            clear: both;
+            *zoom: 1;
+        }
+
+        .layui-form-pane .layui-form-checkbox {
+            margin: 5px 3px 4px 2px;
+        }
+
+        div#div1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: -1;
+        }
+
+            div#div1 > img {
+                height: 100%;
+                width: 100%;
+                border: 0;
+            }
+
+        .inputdiv {
+            display: flex;
+            border: 1px solid #D2D2D2 !important;
+            background-color: #fff;
+            height: 38px;
+            line-height: 38px;
+            padding: 0px 19px;
+            border-radius: 20px;
+            color: #000;
+        }
+
+        .layui-input {
+            border-style: none;
+        }
+
+        .bgimg {
+            position: absolute;
+            height: 95%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            margin: auto;
+            width: 90%;
+            padding: 10px;
+            padding-top: 4px;
+            background: rgba(255, 255, 255, 0.50);
+            color: #000;
+            /*  border-width: 1px;
+            border-color: #e6e6e6;
+            border-style: solid;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px 0 rgb(0 0 0 / 50%);*/
+            border-radius: 5px;
+        }
+
+        .top {
+            background-color: #000000;
+            border-bottom: 1px solid #EEEEEE;
+            z-index: 111;
+            width: 100%;
+            margin-bottom: 5px;
+            height: 46px;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .topname {
+            line-height: 46px;
+            width: 50%;
+            text-align: center;
+            color: #fff;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+<body style="  background: #DBF0FB;background-repeat: no-repeat; background-size: 100% auto; ">
+    <div style="width:50%; margin:0 auto; margin-top:15%;">
+        <img src="img/logo.png" style="width:100%; margin:0 auto;" />
+    </div>
+    <div class="layui-container fly-marginTop" style="margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 999;
+        width: 100%;
+        margin-top: 45%;
+        ">
+        <div class="fly-panel" pad20 style="margin-bottom:0px;">
+            <div class="layui-tab layui-tab-brief" lay-filter="user">
+                <div class="layui-form layui-tab-content" style="padding: 20px 0;margin-top:10px;">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-form layui-form-pane">
+                            <div class="layui-form">
+                                <div class="layui-form-item" style="height:48px;">
+                                    <div class="inputdiv">
+                                        <i class="layui-icon layui-icon-cellphone" style="margin-right:3px;"></i>+234
+                                        <input type="number" id="moblie" maxlength="10" oninput="if(value.length>10)value=value.slice(0,10)" placeholder="Please enter your mobile phone number" class="layui-input" autocomplete="off">
+                                    </div>
+                                </div>
+                                <!--<div class="layui-form-item" style="height:48px; ">
+        <div style="width:60%;float:left;">
+            <div class="inputdiv">
+                <i class="layui-icon layui-icon-vercode"></i>
+                <input type="text" id="phonecode" maxlength="6" placeholder="Verification Code" style="width:100%;" class="layui-input" autocomplete="off">
+            </div>
+        </div>
+        <div style="float:left; margin-left:3%;width:37%; ">
+            <input class="layui-btn" id="sendcode" value="GET" style="width:100%; border-radius: 5px; border:0px; background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226));" type="button" />
+        </div>
+    </div>-->
+                                <div class="layui-form-item" style="height:48px;">
+                                    <div class="inputdiv">
+                                        <i class="layui-icon layui-icon-password"></i>
+                                        <input type="password" id="password" maxlength="20" placeholder="Please set the password" autocomplete="off" class="layui-input" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="height:48px;">
+                                    <div class="inputdiv">
+                                        <i class="layui-icon layui-icon-password"></i>
+                                        <input type="password" id="password1" maxlength="20" placeholder="Please confirm the password" autocomplete="off" class="layui-input" />
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item" style="height:48px;">
+                                    <div class="inputdiv">
+                                        <i class="layui-icon layui-icon-vercode"></i>
+                                        <input type="text" id="invitation" maxlength="6" placeholder="Please enter invitation code" autocomplete="off" class="layui-input" />
+                                    </div>
+                                </div>
+                                
+                                <div class="layui-form-item" style="height:48px;">
+                                    <div style="width:60%;float:left;">
+                                        <div class="inputdiv">
+                                            <i class="layui-icon layui-icon-vercode"></i>
+                                            <input type="text" id="code" maxlength="4" placeholder="Verification Code" style="width:100%;" class="layui-input" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div style="float:left; margin-left:3%;width:37%; ">
+                                        <img class="verifyImg" id="verifyImg" src="#" style="width: 100%;height:38px;border-radius: 5px;" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="margin-top:25px;">
+                                    <div style="width:100%; margin:0 auto;">
+                                        <input class="layui-btn" id="reg" value="Register" style="width:100%;font-weight:700;border:0px; background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226)); border-radius: 25px; " type="button" />
+                                    </div>
+                                    <div style="width:80%; margin:0 auto; text-align:center;color:#808080; margin-top:25px;">
+                                        Do you have an account? <a href="login.html" style="font-weight:700; font-size: 16px; display: inline-block; color:rgb(70,78,227);" id="register_a_btn">Sign in now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Mirrored from 5g-era.in/reg.html?code= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:47 GMT -->
+</html>

@@ -1,0 +1,573 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/porp/Withdrawal.html?time= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:53 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Withdraw money</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../Lay/layui.js"></script>
+    <link href="../../Lay/css/layui.css" rel="stylesheet" />
+    <script src="../../js/comm.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../Lay/lay/modules/i18n.js"></script>
+    <style type="text/css">
+        .top {
+            background-color: #fff;
+            border-bottom: 1px solid #EEEEEE;
+            z-index: 100;
+            width: 100%;
+            margin-bottom: 5px;
+            height: 46px;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .topname {
+            line-height: 46px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 50%;
+            text-align: center;
+            color: #000;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .payitem1 {
+            border: 1px solid #666;
+            border-radius: 5px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .payitem {
+            border: 1px solid #FF6518;
+            border-radius: 5px;
+            background: linear-gradient(to bottom, rgb(6,170,251), rgb(73,74,226));
+            color: #fff;
+            font-size: 12px;
+        }
+
+            .payitem:before {
+                content: '';
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                border: 17px solid #FF6518;
+                border-top-color: transparent;
+                border-left-color: transparent;
+                border-bottom-right-radius: 5px;
+            }
+
+            .payitem:after {
+                content: '';
+                width: 5px;
+                height: 12px;
+                position: absolute;
+                right: 6px;
+                bottom: 6px;
+                border: 2px solid #fff;
+                border-top-color: transparent;
+                border-left-color: transparent;
+                transform: rotate(45deg);
+                border-bottom-right-radius: 5px;
+            }
+
+        div#div1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: -1;
+        }
+
+            div#div1 > img {
+                height: 100%;
+                width: 100%;
+                border: 0;
+            }
+
+        .inputdiv {
+            display: flex;
+            border: 1px solid #D2D2D2 !important;
+            background-color: #fff;
+            height: 38px;
+            line-height: 38px;
+            padding: 0px 19px;
+            border-radius: 5px;
+            color: #000;
+        }
+
+        .layui-input {
+            border-style: none;
+        }
+
+        .layui-form-select dl dd.layui-this {
+            background-image: linear-gradient(to right, rgb(6,170,251), rgb(73,74,226));
+            color: #fff;
+        }
+    </style>
+
+    <script>
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'layedit', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var topindex = parent.layer.getFrameIndex(window.name);
+
+            $().ready(function () {
+
+                userinfo();
+                getfreelv();
+
+                rechargechannel();
+                function rechargechannel() {
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "wi_channel",
+                        time: Math.random()
+                    };
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                var html = "";
+                                if (json.JsonResult.length == 0) {
+                                    html += "<div style=\"height:50px;line-height:50px; text-align:center; width:100%;\">";
+                                    html += "Yeniden şarj kanalı yok";
+                                    html += "</div>";
+                                } else {
+                                    for (var i = 0; i < json.JsonResult.length; i++) {
+                                        if (i == 0) {
+                                            $("#channel").val(json.JsonResult[i].id);
+                                            if (json.JsonResult[i].id == "2") {
+                                                $("#imgurl").attr("src", "../../images/usdt.png");
+                                                $("#selectTitle").html("Choose wallet address");
+                                                $("#UUI").show();
+                                            }
+                                            if (json.JsonResult[i].id == "1") {
+                                                $("#imgurl").attr("src", "../../images/bank2.png");
+                                                $("#selectTitle").html("Select a bank card to withdraw");
+                                                $("#UUI").hide();
+                                            }
+                                            html += "<div style=\"width:30%; float:left;margin-left:2%; margin-top:10px; text-align:center;position: relative; \" value='" + json.JsonResult[i].id + "' class='payitem channelitem'>";
+                                        } else {
+                                            html += "<div style=\"width:30%; float:left;margin-left:2%; margin-top:10px; text-align:center;position: relative; \" value='" + json.JsonResult[i].id + "' class='payitem1 channelitem'>";
+                                        }
+                                        html += "<div style=\"padding:10px;border-radius:5px;  \">";
+                                        html += json.JsonResult[i].name;
+                                        html += "</div>";
+                                        html += "</div>";
+                                    }
+                                }
+                                $("#RechargeChannel").html(html);
+                                form.render();
+                            }
+                            CommAlert(json);
+                        });
+                }
+
+                function userinfo() {
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "getuserinfo",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = true;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                $("#amount").html("₦ " + json.JsonResult.amount);
+                            }
+                            CommAlert(json);
+                        });
+
+                    //var index = layer.load();
+                    //var url = "/ashx/BusServer.ashx";
+                    //var pm = {
+                    //    action: "SelBankList",
+                    //    time: Math.random()
+                    //};
+                    //$.ajaxSettings.async = true;
+                    //$.getJSON(url, pm,
+                    //    function (json) {
+                    //        if (json.State == "200") {
+                    //            var html = " <option value=\"\">Lütfen kartınızı seçind</option>";
+                    //            for (var i = 0; i < json.JsonResult.length; i++) {
+                    //                html += " <option value=\"" + json.JsonResult[i].id + "\">" + json.JsonResult[i].bankname + "(" + json.JsonResult[i].bankcard + ")</option>";
+                    //            }
+                    //            $("#bankname").html(html);
+                    //            form.render();
+                    //        }
+                    //        CommAlert(json);
+                    //        layer.close(index);
+                    //    });
+                }
+
+                function getfreelv() {
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "getfreelv",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = true;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                $("#getfreelv").val(json.JsonResult);
+                                $("#feilv").html((json.JsonResult * 100) + "%")
+                            }
+                            CommAlert(json);
+                        });
+                }
+
+                $("#Cash").keydown(function () {
+                    var id = $("#channel").val();
+                    var a = $("#Cash").val();
+                    if (id == "1") {
+                        var getfreelv = $("#getfreelv").val();
+                        var re = (a * 1 * (1 - getfreelv) * 1);
+                        re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/))
+                        $("#reality").html("₦ " + re.toFixed(2) + "");
+                    }
+                    if (id == "2") {
+                        var re = (a / 14.84).toFixed(6);
+                        re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/));
+                        $("#UTitle").html(a + " ₦ = " + re.toFixed(2) + " U");
+
+                        var getfreelv = $("#getfreelv").val();
+                        var re = (re.toFixed(2) * 1 * (1 - getfreelv) * 1);
+                        re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/))
+                        $("#reality").html(re.toFixed(2) + " U");
+                    }
+                });
+
+                $("#Cash").keyup(function () {
+                    var id = $("#channel").val();
+                    var a = $("#Cash").val();
+                    if (id == "1") {
+                        var getfreelv = $("#getfreelv").val();
+                        var re = (a * 1 * (1 - getfreelv) * 1);
+                        re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/))
+                        $("#reality").html("₦ " + re.toFixed(2) + "");
+                    }
+                    if (id == "2") {
+                        var re = (a / 14.84).toFixed(6);
+                        re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/));
+                        $("#UTitle").html(a + " ₦ = " + re.toFixed(2) + " U");
+
+                        var getfreelv = $("#getfreelv").val();
+                        var re = (re.toFixed(2) * 1 * (1 - getfreelv) * 1);
+                        re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/))
+                        $("#reality").html(re.toFixed(2) + " U");
+                    }
+                });
+
+                $(document).on("click", '#Record', function () {
+                    var url = "WithdrawalRecord07cc.html?time" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 2,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+
+                $("#selectcard").click(function () {
+
+                    var channel = $("#channel").val();
+                    if (channel == "1") {
+                        var url = "bankaccount77e6.html?time=" + Math.random();
+                        layer.open({
+                            type: 2,
+                            title: false,
+                            area: ['100%', '100%'],
+                            offset: 'b',
+                            shadeClose: true,
+                            isOutAnim: false,
+                            closeBtn: 0,
+                            anim: 2,
+                            shade: [0.8, '#393D49'],
+                            maxmin: false,
+                            content: url
+                        });
+                    }
+                    if (channel == "2") {
+                        var url = "bankaccount177e6.html?time=" + Math.random();
+                        layer.open({
+                            type: 2,
+                            title: false,
+                            area: ['100%', '100%'],
+                            offset: 'b',
+                            shadeClose: true,
+                            isOutAnim: false,
+                            closeBtn: 0,
+                            anim: 2,
+                            shade: [0.8, '#393D49'],
+                            maxmin: false,
+                            content: url
+                        });
+                    }
+                });
+
+                $("#accout").click(function () {
+                    var channel = $("#channel").val();
+                    if (channel == "1") {
+                        var url = "bankaccount77e6.html?time=" + Math.random();
+                        layer.open({
+                            type: 2,
+                            title: false,
+                            area: ['100%', '100%'],
+                            offset: 'b',
+                            shadeClose: true,
+                            isOutAnim: false,
+                            closeBtn: 0,
+                            anim: 2,
+                            shade: [0.8, '#393D49'],
+                            maxmin: false,
+                            content: url
+                        });
+                    }
+                    if (channel == "2") {
+                        var url = "bankaccount177e6.html?time=" + Math.random();
+                        layer.open({
+                            type: 2,
+                            title: false,
+                            area: ['100%', '100%'],
+                            offset: 'b',
+                            shadeClose: true,
+                            isOutAnim: false,
+                            closeBtn: 0,
+                            anim: 2,
+                            shade: [0.8, '#393D49'],
+                            maxmin: false,
+                            content: url
+                        });
+                    }
+                });
+
+                $(document).on("click", '.channelitem', function () {
+                    $(".channelitem").each(function () {
+                        $(this).addClass("payitem1");
+                        $(this).removeClass("payitem");
+                    });
+                    $(this).addClass("payitem");
+                    $(this).removeClass("payitem1");
+                    var id = $(this).attr("value");
+                    $("#channel").val(id);
+                    $("#bankid").val("0");
+
+                    if (id == "2") {
+                        $("#imgurl").attr("src", "../../images/usdt.png");
+                        $("#selectTitle").html("Cüzdan adresini seçin");
+                        $("#UUI").show();
+                    }
+                    if (id == "1") {
+                        $("#imgurl").attr("src", "../../images/bank2.png");
+                        $("#selectTitle").html("Çekmek için bir banka kartı seçin");
+                        $("#UUI").hide();
+                    }
+                    var id = $("#channel").val();
+                    var a = $("#Cash").val();
+                    if (id == "1") {
+                        var getfreelv = $("#getfreelv").val();
+                        var re = (a * 1 * (1 - getfreelv) * 1);
+                        re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/))
+                        $("#reality").html(re.toFixed(2) + " TL");
+                    }
+                    if (id == "2") {
+                        var re = (a / 14.84).toFixed(6);
+                        re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/));
+                        $("#UTitle").html(a + " ₦ = " + re.toFixed(2) + " U");
+
+                        var getfreelv = $("#getfreelv").val();
+                        var re = (re.toFixed(2) * 1 * (1 - getfreelv) * 1);
+                        re = Number(re.toString().match(/^\d+(?:\.\d{0,2})?/))
+                        $("#reality").html(re.toFixed(2) + " U");
+                    }
+                });
+
+                $("#change").click(function () {
+                    var url = "Paypassword07cc.html?time" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 2,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $("#Submit").click(function () {
+                    var cardid = $("#bankid").val();
+                    var amount = $("#Cash").val();
+                    var channel = $("#channel").val();
+                    var paypassword = $("#paypassword").val();
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "createwi",
+                        channel: channel,
+                        cardid: cardid,
+                        amount: amount,
+                        paypassword: paypassword,
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = false;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                error(json.JsonResult);
+                                parent.upuserinfo();
+                                setTimeout(function () {
+                                    parent.layer.close(topindex);
+                                }, 1000);
+                            }
+                            CommAlert(json);
+                        });
+                });
+
+                $("#btnClose").click(function () {
+                    parent.layer.close(topindex);
+                });
+            });
+        });
+    </script>
+</head>
+<body style="background:#DBF0FB;">
+    <input type="hidden" id="getfreelv" value="0.0" />
+    <input type="hidden" id="channel" value="0" />
+    <input id="bankid" type="hidden" value="0" />
+    <div class="top">
+        <div style="float:left; line-height:46px;width:50%;" id="btnClose">
+            <i class="layui-icon" style=" color:#000; margin-left:12px; font-size:18px;  font-weight:bold;">&#xe603;</i>
+        </div>
+        <font class="topname" id="withdrawal_title">
+            Withdraw money
+        </font>
+        <div style="float:right; text-align:right; line-height:46px;width:50%;">
+            <i class="layui-icon" style=" color:#000; margin-right:10px; font-size:20px;" id="Record">&#xe60a;</i>
+        </div>
+    </div>
+
+    <div style="width:98%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); margin-top:55px; padding-top:10px; padding-bottom:10px;  border-radius:5px;  margin-bottom:10px;  height:auto; overflow:hidden;">
+        <div style="margin:10px; text-align:center; height:80px; border-radius:5px;">
+            <div style="color: #afb6bd; padding-top:15px;">
+                <span id="recharge_txt1">My balance</span>
+                <div style="color:#000;padding-top:10px; font-size:19px; font-weight:700; " id="amount">0.00</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width:98%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); margin-top:2px; padding-top:10px; padding-bottom:10px;border-radius:5px;height:auto; overflow:hidden;">
+        <div class="layui-form">
+            <div style="padding-left:10px; padding-bottom:10px;font-weight:bold; color:#08163C; ">Withdrawal channel</div>
+            <div id="RechargeChannel" style="color:#fff;">
+
+            </div>
+            <div style="padding-left:10px; width:100%; float:left; padding-top:20px; height:15px; padding-bottom:10px;font-weight:bold; color:#08163C;">Withdrawal information <span style="font-size: 12px; font-weight:100;color: #FFAD41;">（Minimum withdrawal ₦ 2,000）</span></div>
+            <!--<div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+                <div style="width:95%;  margin:0 auto; text-align:left; font-size:12px;">
+                    <font style="float:left;">&nbsp;&nbsp;No debit card? </font>
+                    <font style="float: right; color: blue; text-decoration: underline; " id="accout">Click to add</font>
+                </div>
+            </div>-->
+            <div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+                <!--<div style="width: 95%; text-align: left; margin:0 auto;margin-top:10px;">
+                    <select id="bankname">
+                        <option value="">Lütfen kartınızı seçin</option>
+                    </select>
+                </div>-->
+                <div style="width: 95%; margin:0 auto;margin-top:10px;">
+                    <div class="inputdiv" style="line-height:38px; padding:0 10px;" id="selectcard">
+                        <img src="../../images/usdt.png" style="height: 30px; margin-top: 4px;" id="imgurl" />
+                        <font style="margin-left:10px;" id="selectTitle"> </font>
+                    </div>
+                </div>
+                <div style="width: 95%; margin:0 auto;margin-top:10px;">
+                    <div class="inputdiv">
+                        <div style="width:15px;">
+                            ₦
+                        </div>
+                        <input type="number" id="Cash" oninput="if(value.length>8)value=value.slice(0,8)" style="font-size:12px;" placeholder="Please enter recharge amount" class="layui-input" autocomplete="off">
+                    </div>
+                </div>
+
+                <div style="width: 95%; margin:0 auto; margin-top:10px; display:none;" id="UUI">
+                    <div class="inputdiv" style="color:orangered; font-size:12px;">
+                        1USDT = 14.84₦，<font style="color:blue; margin-left:4px;" id="UTitle">1₦ = 0.06U</font>
+                    </div>
+                </div>
+
+                <div style="width: 95%; margin:0 auto;margin-top:10px; display:none;">
+                    <div class="inputdiv">
+                        <div style="width:15px;">
+                            <i class="layui-icon layui-icon-password"></i>
+                        </div>
+                        <input type="password" id="paypassword" maxlength="20" style="font-size:12px;" placeholder="Please enter the payment password" autocomplete="off" class="layui-input" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <!--<div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+                <div style="width:95%;margin:0 auto; text-align:left; font-size:12px;">
+                    <font style="float:left;font-size:12px;">&nbsp;&nbsp;Payment password is the same as login password</font>
+                </div>
+            </div>-->
+            <!--<div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+                <div style="width:95%;margin:0 auto; text-align:left; font-size:12px;">
+                    <font style="float: right; color: blue;   text-decoration: underline;" id="change">Change payment password</font>
+                </div>
+            </div>-->
+            <div style="text-align: center; float:left;width:100%;  padding-top:15px; display:none; ">
+                <div style="width:95%;margin:0 auto; text-align:left; font-size:12px;">
+                    <font style="float:left;font-size:12px;color:red;"><font>&nbsp;&nbsp;Withdrawal tax</font>:<font id="feilv">0%</font>,<font>Amount received</font>: <font id="reality">0</font></font>
+                </div>
+            </div>
+            <div style="text-align: center; float:left;width:100%;  padding-top:15px;">
+                <input class="layui-btn" id="Submit" value="Submit" style="width:95%;border:0px; margin:0 auto;  background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226)); border-radius: 25px;" type="button" />
+            </div>
+        </div>
+    </div>
+    <div style="width:98%; margin: 0 auto;  background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); ">
+        <div style="padding: 10px; color: #7e7e7e; line-height: 18px; font-size: 12px; ">
+            <br />
+            <font style="color:#000;"> Withdrawal Rules:</font> <br /><br />
+
+            1. The minimum withdrawal amount is 2,000NGN.<br />
+            2. Withdrawals are subject to 5% personal income tax.<br />
+            3. Withdrawal time: 9:00 am to 9:00 pm every day.<br />
+            4. You can only withdraw once a day.<br />
+            5. Withdrawals will usually arrive within 2 hours. There may be a delay in special circumstances, but it will not exceed 24 hours.<br />
+            <font style="color:red; font-weight:bold;">
+                6. If the withdrawal is unsuccessful, you can re-apply for withdrawal again.<br />
+                7. The payment network sometimes fluctuates. If the payment fails, you can try to change the bank to make the payment or resubmit<br />
+            </font>
+            <br />   <br />
+        </div>
+    </div>
+
+</body>
+
+<!-- Mirrored from 5g-era.in/main/porp/Withdrawal.html?time= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:55 GMT -->
+</html>

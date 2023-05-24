@@ -1,0 +1,455 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/main.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:47 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>House</title>
+    <link href="../Lay/css/layuicb0c.css?v1.2" rel="stylesheet" />
+    <link href="../css/stylecb0c.css?v1.2" rel="stylesheet" />
+    <link href="../css/maincb0c.css?v1.2" rel="stylesheet" />
+    <script src="../Lay/layuicb0c.js?v1.2"></script>
+    <script src="../js/commcb0c.js?v1.2"></script>
+    <script type="text/javascript">
+        function kefu2() {
+            var url = "https://t.me/era5g01";
+            if (window.android) {
+                window.android.callAndroid("open," + url);
+                return;
+            }
+            if (window.webkit && window.webkit.messageHandlers) {
+                window.webkit.messageHandlers.nativeExt.postMessage({ msg: 'open,' + url });
+                return;
+            }
+            window.open(url, "_blank")
+        }
+
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'layedit', 'laydate', 'layer', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var form = layui.form;
+            var element = layui.element;
+            var $ = layui.jquery, layer = layui.layer;
+            var carousel = layui.carousel;
+            var cookie = layui.cookie;
+            var topindex = parent.layer.getFrameIndex(window.name);
+            $().ready(function () {
+                getindexdata();
+                getuserinfo();
+
+                function getuserinfo() {
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "getuserinfo",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = false;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+
+                                LogionNotice();
+                                //var isNotice = $.cookie('isNotice' + json.JsonResult.id);
+                                //if (isNotice == null) {
+                                //    //$.cookie('isNotice', 1, { path: '/', expires: 1 });
+                                //    var expireDate = new Date();
+                                //    expireDate.setTime(expireDate.getTime() + (1 * 60 * 60 * 1000));
+                                //    $.cookie('isNotice' + json.JsonResult.id, 1, { expires: expireDate, path: '/' });
+                                //    //var expiresDate = new Date();
+                                //    //expiresDate.setTime(expiresDate.getTime() + (240 * 60 * 1000));
+
+                                //}
+                                //isNotice = $.cookie('isNotice' + json.JsonResult.id);
+                                //if (isNotice == "1") {
+                                //    var expireDate = new Date();
+                                //    expireDate.setTime(expireDate.getTime() + (4 * 60 * 60 * 1000));
+                                //    $.cookie('isNotice' + json.JsonResult.id, 0, { expires: expireDate, path: '/' });
+
+                                //    //$.cookie('isNotice', 0, { path: '/', expires: 1 });
+                                //    //var expiresDate = new Date();
+                                //    //expiresDate.setTime(expiresDate.getTime() + (240 * 60 * 1000));
+                                //    //$.cookie('isNotice', 0, { expires: expiresDate, path: '/' });
+                                //    LogionNotice();
+                                //}
+                            }
+                            CommAlert(json);
+                        });
+                }
+
+                function LogionNotice() {
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "getsiteconfig",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = true;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                var main_prop_txt1 = "Group announcement";
+                                var main_prop_txt2 = json.JsonResult.noctice_en + "<br/><br/>";
+                                //"Türk Telekom bünyesinde ortak bir 5G baz istasyonu yapım şirketiyiz ve herkes için farklı güç ürünlerinin çeşitli modellerini hazırladık.<br><br>";
+                                //main_prop_txt2 += "Baz istasyonları satın almak için başkalarıyla birlikte çalışabilir ve baz istasyonları tarafından üretilen gelirler yatırımla orantılı olarak dağıtılır ve daha fazla fayda elde etmek için kendi ekibinizi de oluşturabilirsiniz.<br><br>";
+                                //main_prop_txt2 += "Herhangi bir sorunuz varsa, lütfen müşteri hizmetleri ile iletişime geçin";
+                                var main_prop_txt3 = "I Know";
+                                var telegram = "https://t.me/era5g01";
+                                main_prop_txt2 += "<div style='margin-top:2px;width:100%;height:24px;'><div style='float:left;'><img src='/img/line1.png' style='height:20px; width:20px;margin:2px;' /></div><div style='float:left;line-height:24px; margin-left:5px;' onclick='kefu2()'>Telegram channel:<font calss='support12' style='color:blue;'  >" + telegram + "</font></div></div>";
+                                var html = "<div style=\"padding: 20px; padding-top:5px; padding-bottom:5px; font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif; line-height:13px;\">";
+                                html += '<div style=\"width:100%;font-weight:bold; text-align:center;\"><img src="/img/notice.png" style="width:45px;magin:0 auto; magin-top:10px;magin-bottom:10px;"></div><div style=\"width:100%;font-weight:bold; text-align:center; padding-bottom:10px;\">' + main_prop_txt1 + '</div>' + main_prop_txt2 + '<br />';
+                                html += '</div>';
+                                layer.open({
+                                    type: 1,
+                                    title: false,
+                                    closeBtn: 0,
+                                    shadeClose: false,
+                                    btn: [main_prop_txt3],
+                                    area: '80%',
+                                    content: html
+                                });
+                            }
+                            CommAlert(json);
+                        });
+                }
+
+                var ins = carousel.render({
+                    elem: '#test2'
+                    , interval: 10000
+                    , anim: 'default'
+                    , height: '180px'
+                    , width: '100%'
+                    , arrow: 'none'
+                    , backgroundcolor: '#404553'
+                });
+
+                $("#test2").on("touchstart", function (e) {
+                    var startX = e.originalEvent.targetTouches[0].pageX;
+                    $(this).on('touchmove', function (e) {
+                        arguments[0].preventDefault();
+                    });
+                    $(this).on('touchend', function (e) {
+                        var endX = e.originalEvent.changedTouches[0].pageX;
+                        e.stopPropagation();
+                        if (endX - startX > 30) {
+                            ins.slide("sub");
+                        }
+                        else if (startX - endX > 30) {
+                            ins.slide("add");
+                        }
+                        $(this).off('touchmove touchend');
+                    });
+                });
+
+
+                function getindexdata() {
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "indexdata",
+                        time: Math.random()
+                    };
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                var html = "";
+                                for (var i = 0; i < json.JsonResult.length; i++) {
+                                    html += "<div>" + json.JsonResult[i].context + "</div>";
+                                }
+                                $("#demo1").html(html);
+
+                                var speed = 40
+                                demo2.innerHTML = demo1.innerHTML
+                                demo.scrollTop = demo.scrollHeight
+                                function Marquee() {
+                                    if (demo1.offsetTop - demo.scrollTop >= 0)
+                                        demo.scrollTop += demo2.offsetHeight
+                                    else {
+                                        demo.scrollTop--
+                                    }
+                                }
+                                var MyMar = setInterval(Marquee, speed)
+                            }
+                            CommAlert(json);
+                        });
+                }
+                function checkPlatform() {
+                    if (/android/i.test(navigator.userAgent)) {
+                        console.log("Android");//Android
+                    }
+                    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                        console.log("iOS");//iOS
+                    }
+                }
+                $(document).on("click", '#indexcaidan li', function () {
+                    var url = $(this).attr("url") + "?time" + Math.random();
+                    var url1 = $(this).attr("url")
+                    if (url1 == "../down.html") {
+                        url = url;
+                        var u = navigator.userAgent;
+                        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
+                        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+                        if (isiOS) {
+                            error("Apple mobile phone can not download the application");
+                        } else {
+                            var url = "https://www.5g-era.in/5gera.apk";
+                            if (window.android) {
+                                window.android.callAndroid("open," + url);
+                                return;
+                            }
+                            if (window.webkit && window.webkit.messageHandlers) {
+                                window.webkit.messageHandlers.nativeExt.postMessage({ msg: 'open,' + url });
+                                return;
+                            }
+                            window.open(url, "_blank")
+                        }
+                        //layer.open({
+                        //    type: 2,
+                        //    title: false,
+                        //    area: ['100%', '150px'],
+                        //    offset: 'b',
+                        //    shadeClose: true,
+                        //    isOutAnim: false,
+                        //    closeBtn: 0,
+                        //    anim: 2,
+                        //    shade: [0.8, '#393D49'],
+                        //    maxmin: false,
+                        //    content: url
+                        //});
+                    } else {
+                        parent.layer.open({
+                            type: 2,
+                            title: false,
+                            area: ['100%', '100%'],
+                            shadeClose: true,
+                            isOutAnim: false,
+                            closeBtn: 0,
+                            anim: 5,
+                            shade: [0.8, '#393D49'],
+                            maxmin: false,
+                            content: url
+                        });
+                    }
+                });
+
+                $(document).on("click", '#about5g', function () {
+                    var url = "Investment77e6.html?time=" + Math.random();
+                    location.href = url;
+                });
+
+                $(document).on("click", '#t1', function () {
+                    var url = "porp/Share77e6.html?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+
+                $(document).on("click", '#online', function () {
+                    var url = "porp/Online77e6.html?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+
+            });
+        });
+    </script>
+    <style type="text/css">
+        layer-page .layui-layer-btn {
+            padding-top: 0px !important;
+        }
+
+        .layui-layer-btn {
+            text-align: center !important;
+            padding: 0 0px 12px;
+            pointer-events: auto;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+            .layui-layer-btn a {
+                margin: 5px 5px 0;
+                padding: 0 0px !important;
+                height: 28px;
+                line-height: 28px;
+                text-align: center;
+                width: 50%;
+                border: 1px solid #dedede;
+                background-color: #fff;
+                color: #333;
+                border-radius: 2px;
+                font-weight: 400;
+                cursor: pointer;
+                text-decoration: none;
+                border-radius: 20px !important;
+            }
+
+        .layui-layer-page {
+            border-radius: 20px !important;
+        }
+
+        .layui-layer-btn .layui-layer-btn0 {
+            border-color: #117546 !important;
+            border: 0px;
+            background-image: linear-gradient(to right, rgb(6,170,251), rgb(73,74,226)) !important;
+            color: #fff;
+        }
+
+        .aui {
+            overflow: hidden;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+            .aui li {
+                width: 25%;
+                float: left;
+                padding: .266667rem 0;
+            }
+
+                .aui li img {
+                    display: block;
+                    margin: 0 auto;
+                    width: auto;
+                    height: 40px;
+                }
+
+                .aui li p {
+                    text-align: center;
+                    font-size: 14px;
+                    margin-top: 10px;
+                    color: #000;
+                }
+
+
+        .announcement-title {
+            text-align: left;
+            font-size: 20px;
+            font-weight: 500;
+            color: #434343;
+            margin-left: 15px;
+        }
+
+        .gray {
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+            filter: gray;
+        }
+    </style>
+</head>
+<body style="background-color: #DBF0FB;">
+    <input id="main_prop_txt1" type="hidden" value="" />
+    <input id="main_prop_txt2" type="hidden" value="" />
+    <input id="main_prop_txt3" type="hidden" value="" />
+    <div class="top" style="height:50px; background:#f7f7f7;">
+        <div style="float:left; text-align:left;  ">
+            <img src="../img/main_logo.png" style=" margin-left:10px; height:37px; margin-top:7px;" />
+        </div>
+        <div style="float:right;  text-align:right; line-height:50px; width:25%">
+            <img src="../img/kefu.png" style="height:25px;margin-right:20px; " id="online" />
+        </div>
+    </div>
+
+    <div style="width:100%; margin-top:60px; margin-bottom:55px;">
+        <div style="width:95%; margin:0 auto; margin-top:20px; margin-bottom:10px;">
+            <div class="layui-carousel" id="test2" style="text-align:center; margin:0 auto;width:100%;">
+                <div carousel-item="" style="text-align: center;width:100%; ">
+                    <div>
+                        <img src="../img/banner.jpg" style="height: 180px; width: 100%; border-radius: 5px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width:95%; margin:0 auto;  background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); font-size:12px; padding-top:1px; padding-bottom:5px;border-radius:10px;">
+            <div style="text-align: center;">
+                <ul id="indexcaidan" class="aui">
+                    <li url="porp/Recharge.html">
+                        <img src="../img/n1.png" alt="">
+                        <p id="main_txt2">Recharge</p>
+                    </li>
+                    <li url="porp/Online.html">
+                        <img src="../img/n2.png" alt="">
+                        <p id="main_txt3">Help center</p>
+                    </li>
+                    <li url="porp/Platform.html">
+                        <img src="../img/n3.png" alt="">
+                        <p id="main_txt4">How use</p>
+                    </li>
+                    <li url="../down.html">
+                        <img src="../img/n4.png" alt="">
+                        <p id="main_txt5">Download</p>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div style="width:95%;  margin:0 auto;background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC);  padding-top:10px; padding-bottom:10px;border-radius:10px;margin-top:10px;">
+            <img src="../img/b1.png" style="width:100%; " id="t1" />
+            <div style="margin-top:10px;">
+                <div class="announcement-title">Platform user dynamics</div>
+            </div>
+            <div style="margin-top:10px; overflow: hidden; padding: 0 15px;
+    margin-top: 10px;" id="roomlist">
+                <div id=demo style="overflow:hidden; width:100%; height:100px;color: #117546;">
+                    <div id=demo1 style=" color: #117546; font-size:12px;">
+
+                    </div>
+                    <div id=demo2 style="font-size: 12px;"></div>
+                </div>
+                <!--<marquee direction="down" behavior="scroll" height="100" scrollamount="1" scrolldelay="100" style=" color: #117546;" id="mainlist">
+                </marquee>-->
+            </div>
+        </div>
+        <div style="width:95%;  margin:0 auto; padding-top:5px; padding-bottom:10px;border-radius:10px;margin-top:5px;">
+            <img src="../img/b2.png" style="width:100%; " id="about5g" />
+        </div>
+    </div>
+
+    <nav class="nav">
+        <a style="color: rgb(69,158,248); font-weight: bold;">
+            <img src="../img/nav/1.png" style="width:28px;" /><br />
+            <span id="nav_btn1">House</span>
+        </a>
+        <a href="Investment.html">
+            <img src="../img/nav/22.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn2">Investment</span>
+        </a>
+        <a href="Profit.html">
+            <img src="../img/nav/33.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn3">Team</span>
+        </a>
+        <a href="Personal.html">
+            <img src="../img/nav/44.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn4">Personal</span>
+        </a>
+    </nav>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/main.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:47 GMT -->
+</html>

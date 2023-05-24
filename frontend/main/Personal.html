@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/Personal.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:37 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Personal</title>
+    <link href="../Lay/css/layuicb0c.css?v1.2" rel="stylesheet" />
+    <link href="../css/stylecb0c.css?v1.2" rel="stylesheet" />
+    <link href="../css/maincb0c.css?v1.2" rel="stylesheet" />
+    <script src="../Lay/layuicb0c.js?v1.2"></script>
+    <script src="../js/commcb0c.js?v1.2"></script>
+    <style type="text/css">
+        .aui {
+            overflow: hidden;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+            .aui li {
+                width: 25%;
+                float: left;
+                padding: .266667rem 0;
+            }
+
+                .aui li img {
+                    display: block;
+                    margin: 0 auto;
+                    width: auto;
+                    height: 35px;
+                }
+
+                .aui li p {
+                    text-align: center;
+                    font-size: 14px;
+                    margin-top: 10px;
+                    color: #5e6265;
+                }
+
+
+        .announcement-title {
+            float: left;
+            width: 50%;
+            text-align: left;
+            font-size: 20px;
+            font-weight: 500;
+            color: #434343;
+        }
+
+        .gray {
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+            filter: gray;
+        }
+    </style>
+    <script>
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'layedit', 'laydate', 'layer', 'carousel', 'flow', 'element', 'cookie'], function () {
+            var form = layui.form;
+            var element = layui.element;
+            var $ = layui.jquery, layer = layui.layer;
+            var cookie = layui.cookie;
+
+            var topindex = parent.layer.getFrameIndex(window.name);
+            $().ready(function () {
+                getuserinfo();
+                window.upuserinfo = function () {
+                    getuserinfo();
+                };
+                function getuserinfo() {
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        action: "getuserinfo",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = false;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                $("#amount").html("₦ " + json.JsonResult.amount);
+                                $("#moblie").html(json.JsonResult.moblie);
+                                $("#myrevenue").html("₦ " + json.JsonResult.myrevenue);
+                            }
+                            CommAlert(json);
+                        });
+                }
+                $(document).on("click", '#Recharge', function () {
+                    var url = "porp/Recharge77e6.html?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+                
+
+                $(document).on("click", '#financerecord', function () {
+                    var url = "porp/financerecord77e6.html?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $(document).on("click", '#Withdrawal', function () {
+                    var url = "porp/Withdrawal77e6.html?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+
+                $(document).on("click", '#Extract', function () {
+                    var url = "porp/Extract77e6.html?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+
+                $(document).on("click", '#indexcaidan li', function () {
+                    var url = $(this).attr("url") + "?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $(document).on("click", '#online', function () {
+                    var url = "porp/Online77e6.html?time=" + Math.random();
+                    parent.layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 5,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $(document).on("click", '#Logout', function () {
+                    var url = "/ashx/LoginServer.ashx";
+                    var pm = {
+                        action: "logout",
+                        time: Math.random()
+                    };
+                    $.ajaxSettings.async = false;
+                    $.getJSON(url, pm,
+                        function (json) {
+                            location.href = "../login.html";
+                        });
+                });
+
+                $(document).on("click", '#btnClose', function () {
+                    parent.layer.close(topindex);
+                });
+            });
+        });
+    </script>
+</head>
+<body style="background-color: #DBF0FB;">
+    <div class="top" style="height:50px; background:#f7f7f7;">
+        <div style="float:left; text-align:left;  ">
+            <img src="../img/main_logo.png" style=" margin-left:10px; height:37px; margin-top:7px;" />
+        </div>
+        <div style="float:right;  text-align:right; line-height:50px; width:25%">
+            <img src="../img/kefu.png" style="height:25px;margin-right:20px; " id="online" />
+        </div>
+    </div>
+    <div style="width:100%; margin-top:60px; margin-bottom:55px;  height:auto; overflow:hidden;">
+        <div>
+            <div style="width:100%; height:28px;">
+                <div style=" width:100%; margin-left:5%;  cursor:pointer;">
+                    <div style="float:left;">
+                        <img src="../img/vip.png" style="height:22px;" />
+                    </div>
+                    <div style="float:left; line-height:26px; margin-left:10px;">
+                        <span style="font-weight:bold; color:gray; font-size:14px; " id="moblie"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="width:50%; margin:0 auto; margin-top:10px; ">
+            <img src="../img/logo_user.png" style="width:100%;" />
+        </div>
+
+        <!--<div style="width:95%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); margin-top:20px; height:80px; padding-top:10px; border-radius:10px;">
+            <div style="width:100%;position:relative;">
+                <table style="width:95%; margin:0 auto; margin-top:10px;">
+                    <tr>
+                        <td style="width:50px;">
+                            <img src="/img/head.png" id="imgurl" style=" height:50px; width:50px; margin:0 auto; padding:5px;   margin-bottom:2px; border-radius: 100px;" />
+                        </td>
+                        <td style="width:320px; color:#fff">
+                            <div id="moblie" style="font-size:13px; height:19px;color:#000;"></div>
+                            <div style="font-size:13px;height:17px;">
+                                Produce chips to earn high profits
+                            </div>
+                        </td>
+                        <td style="text-align:right;padding-right:15px; font-size:12px; color:#fff;">
+                            <div id="viptypes" style="margin-bottom:10px;"></div>
+                            <div class="gray" id="viptype_top" style="background:url(/img/vipbg.png) no-repeat;background-size:100%; display:none; width:70px; height:20px;position:relative; float:left;">
+                                <div id="viptype" style=" width: 100%;position: absolute; font-weight:bold; font-size:14px; text-align: right; color:#fff;  top:1px; right:6px; ">
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>-->
+        ‘ <div style="width:95%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC);  height:210px; padding-top:10px; padding-bottom:10px;border-radius:10px;">
+            <div style="width:100%; height:28px;">
+                <div style="float:left; width:50%; line-height:25px; cursor:pointer;">
+                    <img src="../img/qb.png" style="height:25px; margin-left:15px; margin-right:15px;" /><span style="font-weight:700; font-size:16px;">Account center</span>
+                </div>
+                <div style="float:left; text-align:right; width:50%;">
+                    <img src="../img/aq.png" style="height:25px; margin-right:15px;" />
+                </div>
+            </div>
+
+            <div style="width:100%; height:90px; text-align:center;">
+                <div style="padding-top: 40px; height: auto; overflow: hidden;">
+                    <div style="float:left; width:50%;">
+                        <div style=" font-weight: 700; font-size: 17px;" id="amount">₦ 0.00</div>
+                        <div style="padding-top:5px;color:#888;">Available Balance</div>
+                    </div>
+                    <div style="float:left; width:50%;">
+                        <div style=" font-weight: 700; font-size: 17px;" id="myrevenue">₦ 0.00</div>
+                        <div style="padding-top:5px;color:#888;">Total revenue</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="width:100%;  margin-top:25px;">
+                <div id="Recharge" style=" height: 45px; float: left; width: 50%; color: #fff; line-height: 45px; font-weight: 700; ">
+                    <div style="height: 45px; width: 80%; text-align:center; margin: 0 auto; box-shadow: 0 0.8vw 2.667vw 1px rgb(0 0 0 / 36%); border-radius: 25px 25px 25px 25px; background-image: linear-gradient(to right,rgb(6,170,251),rgb(73,74,226)); ">
+                        Recharge
+                    </div>
+                </div>
+                <div id="Withdrawal" style=" height: 45px; float:left; width:50%; color: #fff; line-height: 45px; font-weight: 700; ">
+                    <div style="height: 45px; width: 80%; text-align: center; margin: 0 auto; box-shadow: 0 0.8vw 2.667vw 1px rgb(0 0 0 / 36%); border-radius: 25px 25px 25px 25px; background-image: linear-gradient(to right,rgb(73,74,226),rgb(6,170,251)); ">
+                        Withdrawal
+                    </div>
+                </div>
+            </div>
+
+            <!--<div style="width:100%; height:90px;">
+                <div style="float:left; width:50%;">
+                    <div style="margin-left:15px;">
+                        <div style="font-size:13px;" id="personal_txt3">Withdrawable balance</div>
+                        <div style="margin-top:5px;">
+                            <span style="font-size: 16px; display: inline-block; font-weight: 700; color:#117546" id="">₦ 0.00 </span>
+                        </div>
+                    </div>
+                    <div style="margin-left:15px; margin-top:10px;">
+                        <div style="font-size:13px;" id="personal_txt4">My bonus</div>
+                        <div style="margin-top:5px;">
+                            <span style="font-size: 16px; display: inline-block; font-weight: 700; color:#117546" id="income_amount">₦ 0.00 </span>
+                        </div>
+                    </div>
+                </div>
+                <div style="float:left; text-align:right; width:50%;">-->
+            <!--<img src="/img/zc.png" style="height:35px; margin-right:15px;" id="" />-->
+            <!--<input class="layui-btn layui-btn-xs" id="Withdrawal" value="Withdraw" style="width:75px; font-size:12px; margin-top:15px;  margin-right:15px; margin-left:15px; background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226)); border:0px; border-radius: 25px;" type="button" />
+                    <br />
+                    <input class="layui-btn layui-btn-xs" id="Extract" value="Take" style="width:75px;font-size:12px; margin-top:32px; margin-right:15px;margin-left:15px; background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226)); border:0px;border-radius: 25px;" type="button" />
+                </div>
+            </div>-->
+        </div>
+        <div style="width:95%; margin:0 auto; background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC); margin-top:10px; padding-top:5px; padding-bottom:0px;border-radius:10px;">
+            <div style="text-align: center; font-size:12px; ">
+                <ul id="indexcaidan" class="aui">
+                    <li url="porp/Platform.html">
+                        <img src="../img/9.png" alt="">
+                        <p id="personal_txt7">Platform rules</p>
+                    </li>
+                    <li url="porp/Share.html">
+                        <img src="../img/10.png" alt="">
+                        <p id="personal_txt8">Invitation</p>
+                    </li>
+                    <li url="porp/bankaccount.html">
+                        <img src="../img/11.png" alt="">
+                        <p id="personal_txt9">Bank account</p>
+                    </li>
+                    <li url="porp/About.html">
+                        <img src="../img/12.png" alt="">
+                        <p id="personal_txt10">About us</p>
+                    </li>
+
+                    <li url="porp/WithdrawalRecord.html">
+                        <img src="../img/5.png" alt="">
+                        <p id="personal_txt7">Withdrawal records</p>
+                    </li>
+                    <li url="porp/financerecord.html">
+                        <img src="../img/6.png" alt="">
+                        <p id="personal_txt8">Account records</p>
+                    </li>
+                    <li url="porp/Loginpassword.html">
+                        <img src="../img/8.png" alt="">
+                        <p id="personal_txt9">Login password</p>
+                    </li>
+                    <li url="porp/Online.html">
+                        <img src="../img/88.png" alt="">
+                        <p id="personal_txt10">Customer service</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="width:95%; margin:0 auto;  margin-top:5px; padding-top:15px; padding-bottom:20px;border-radius:10px;">
+            <input class="layui-btn" id="Logout" value="Log out" style="box-shadow: 0 0.8vw 2.667vw 1px rgb(0 0 0 / 36%); width: 100%; height: 50px; font-weight: 700; font-size: 16px; background-image: linear-gradient(to right,rgb(73,74,226), rgb(6,170,251)); border: 0px; border-radius: 5px; " type="button" />
+        </div>
+    </div>
+    <nav class="nav">
+        <a href="main.html">
+            <img src="../img/nav/11.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn1">House</span>
+        </a>
+        <a href="Investment.html">
+            <img src="../img/nav/22.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn2">Investment</span>
+        </a>
+        <a href="Profit.html">
+            <img src="../img/nav/33.png" class="gray" style="width:28px;" /><br />
+            <span id="nav_btn3">Team</span>
+        </a>
+        <a style="color: rgb(69,158,248); font-weight: bold;">
+            <img src="../img/nav/4.png" style="width:28px;" /><br />
+            <span id="nav_btn4">Personal</span>
+        </a>
+    </nav>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/Personal.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:06:42 GMT -->
+</html>

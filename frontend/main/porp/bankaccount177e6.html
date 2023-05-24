@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 5g-era.in/main/porp/bankaccount1.html?time= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:08:37 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>
+        Cüzdan adresim
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../Lay/layui.js"></script>
+    <link href="../../Lay/css/layui.css" rel="stylesheet" />
+    <link href="../../css/main.css" rel="stylesheet" />
+    <script src="../../js/comm.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../Lay/lay/modules/i18n.js"></script>
+    <style>
+        .layui-layer-btn0 {
+            border-color: #117546 !important;
+            background-color: #117546 !important;
+            color: #fff;
+        }
+
+        .carditem {
+            width: 100%;
+            font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif;
+            height: 120px;
+            margin: 0 auto;
+            border-width: 0px;
+            border-color: rgba(34, 34, 34, 0.10);
+            border-style: solid;
+            border-radius: 0px;
+            box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.20);
+            background: linear-gradient(176deg, #FFFFFF, #C3EAFE, #A0DDFC);
+            color: #808080;
+            border-radius: 5px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        layui.config({
+            base: '/Lay/lay/modules/'
+        }).use(['form', 'layedit', 'laydate', 'jquery', 'layer', 'cookie'], function () {
+            var $ = layui.jquery, layer = layui.layer;
+            var topindex = parent.layer.getFrameIndex(window.name);
+            $().ready(function () {
+                banklist();
+                window.upbanklist = function () {
+                    banklist();
+                };
+
+                function banklist() {
+                    var index = layer.load();
+                    var url = "/ashx/BusServer.ashx";
+                    var pm = {
+                        type: "1",
+                        action: "SelBankList",
+                        time: Math.random()
+                    };
+                    $.getJSON(url, pm,
+                        function (json) {
+                            if (json.State == "200") {
+                                var html = "";
+                                if (json.JsonResult.length == 0) {
+                                    html += "<div class=\"carditem\" style='margin-top:10px;height:50px'>";
+                                    html += "<div style=\"width:100%; line-height:50px;text-align:center; \">";
+                                    html += "<div>Henüz cüzdan adresi yok</div>";
+                                    html += "</div>";
+                                    html += "</div>";
+                                    $("#card").html(html);
+                                } else {
+                                    var txt2 = "Gerçek isim";
+                                    var txt3 = "Cüzdan adresi";
+                                    for (var i = 0; i < json.JsonResult.length; i++) {
+                                        html += "<div class=\"carditem\" style='margin-top:10px;'>";
+                                        html += "<div style=\"width:25%; float:left;\"  class='items' value='" + json.JsonResult[i].id + "'  bankcard='" + json.JsonResult[i].bankcard +"'>";
+                                        html += "<img src=\"/images/usdt.png\" style=\" height:60px; margin:15px; margin-left:10px;margin-top:35px;\" />";
+                                        html += "</div>";
+                                        html += "<div style=\"width:65%;float:left; line-height:22px; \"  class='items' value='" + json.JsonResult[i].id + "'  bankcard='" + json.JsonResult[i].bankcard +"'>";
+                                        html += "<div style=\"margin-top:15px; color:black; font-size:14px;  \">" + json.JsonResult[i].bankname + "</div > ";
+                                        html += "<div>" + txt2 + "：" + json.JsonResult[i].uname + "</div>";
+                                        html += "<div>" + txt3 + "：<br/>" + json.JsonResult[i].bankcard + "</div>";
+                                        html += "</div>";
+                                        html += "<div style=\"width:10%; float:left;line-height:28px;\">";
+                                        html += "<div style=\"margin-top:28px;\">&nbsp;";
+                                        //html += "<i class=\"layui-icon\" id=\"cardedit_" + json.JsonResult[i].id + "\" cardid='" + json.JsonResult[i].id + "'  style=\"font-size:24px;\">&#xe642;</i>";
+                                        html += "</div>";
+                                        html += "<div>";
+                                        html += "<i class=\"layui-icon\" IFSC='" + json.JsonResult[i].IFSC + "' id=\"carddel_" + json.JsonResult[i].id + "\" cardid='" + json.JsonResult[i].id + "' bankcard='" + json.JsonResult[i].bankcard + "' bankname='" + json.JsonResult[i].bankname + "' uname='" + json.JsonResult[i].uname + "'  style=\"font-size:24px;\">&#xe640;</i>";
+                                        html += "</div>";
+                                        html += "</div>";
+                                        html += "</div>";
+                                    }
+                                    $("#card").html(html);
+                                }
+                            }
+                            CommAlert(json);
+                            layer.close(index);
+                        });
+                }
+
+
+                $(document).on("click", ".items", function () {
+                    var bankid = $(this).attr("value");
+                    var bankcard = $(this).attr("bankcard");
+                    parent.layui.jquery("#bankid").val(bankid);
+                    parent.layui.jquery("#selectTitle").html(bankcard);
+                    parent.layer.close(topindex);
+                });
+
+                var timecount = 0;
+                $(document).on("click", "i[id^='carddel_']", function () {
+                    var notice = "Hatırlat";
+                    var txt1 = "Protokol";
+                    var txt2 = "İsim";
+                    var txt3 = "Cüzdan adresi";
+                    var txt4 = $("#bankaccount_txt5").val();
+                    var txt5 = "Elbette";
+                    var txt6 = "İptal";
+                    var html = "<div style=\"padding:30px; line-height:22px; background-color:#393D49;font: 12px/1.2em '\5b8b\4f53',tahoma,arial,'Hiragino Sans GB',sans-serif; color:#fff; font-weight: 300;\">";
+                    html += txt1 + "  ：" + $(this).attr("bankname") + "<br/><br/>";
+                    html += txt2 + "：" + $(this).attr("uname") + "<br/><br/>";
+                    html += txt3 + " ：" + $(this).attr("bankcard") + "<br/><br/>";
+                    html += "</div>";
+                    var cardid = $(this).attr("cardid");
+                    parent.layer.open({
+                        type: 1
+                        , title: notice
+                        , closeBtn: false
+                        , area: '300px;'
+                        , shade: 0.8
+                        , id: 'LAY_layuipro'
+                        , btn: [txt5, txt6]
+                        , btnAlign: 'c'
+                        , moveType: 0
+                        , content: html
+                        , success: function (layero) {
+                            var btn = layero.find('.layui-layer-btn');
+                            btn.find('.layui-layer-btn1').click(function () {
+                                $("#btnBuy").removeClass("layui-btn-disabled");
+                                $("#btnBuy").attr("disabled", false);
+                            });
+                            btn.find('.layui-layer-btn0').click(function () {
+                                if (timecount == 0) {
+                                    timecount = 1;
+                                    var url = "/ashx/BusServer.ashx";
+                                    var pm = {
+                                        action: "delBank",
+                                        cardid: cardid,
+                                        time: Math.random(),
+                                    }
+                                    $.getJSON(url, pm,
+                                        function (json) {
+                                            if (json.State == "200") {
+                                                error(json.JsonResult);
+                                                banklist();
+                                            }
+                                            if (json.State == "300") {
+                                                error(json.JsonResult);
+                                            }
+                                        });
+                                    timecount = 0;
+                                }
+                            });
+                        }
+                    });
+                });
+
+                $("#Addbank").click(function () {
+                    var url = "addaccount107cc.html?time" + Math.random();
+                    layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['100%', '100%'],
+                        shadeClose: true,
+                        isOutAnim: false,
+                        closeBtn: 0,
+                        anim: 2,
+                        shade: [0.8, '#393D49'],
+                        maxmin: false,
+                        content: url
+                    });
+                });
+
+                $("#btnClose").click(function () {
+                    parent.layer.close(topindex);
+                });
+            });
+        });
+    </script>
+</head>
+<body style="background:#DBF0FB;">
+    <input type="hidden" id="bankaccount_txt1" value="" />
+    <input type="hidden" id="bankaccount_txt2" value="" />
+    <input type="hidden" id="bankaccount_txt3" value="" />
+    <input type="hidden" id="bankaccount_txt4" value="" />
+    <input type="hidden" id="bankaccount_txt5" value="" />
+    <input type="hidden" id="bankaccount_txt6" value="" />
+    <input type="hidden" id="bankaccount_txt7" value="" />
+    <div style="background-color:#fff;
+        font-size: 17px;
+        font-weight: 500;
+        border-bottom: 1px solid #EEEEEE;
+        z-index: 100;
+        width: 100%;
+        margin-bottom: 5px;
+        height: 46px;
+        position: fixed;
+        left: 0px;
+        top: 0px;">
+        <div style="float:left; line-height:46px;width:30px;">
+            <i class="layui-icon" style="color:#000;  margin-left:12px; font-size:18px;  font-weight:bold;" id="btnClose">&#xe603;</i>
+        </div>
+        <div style="float:left; line-height:46px; text-align:center;color:#000;width:85%;" id="bankaccount_title">
+            Cüzdan adresim
+        </div>
+    </div>
+    <div class="layui-form layui-tab-content" style="padding:5px 10px; margin-top:46px;">
+        <div id="card" style="width:100%;">
+
+        </div>
+    </div>
+
+    <nav class="nav">
+        <input class="layui-btn" id="Addbank" value="Cüzdan adresi Ekle" style="width:100%; background-image: linear-gradient(to right, rgb(6,170,251) , rgb(73,74,226)); border:0px !important; border-radius: 25px !important;" type="button" />
+    </nav>
+</body>
+
+<!-- Mirrored from 5g-era.in/main/porp/bankaccount1.html?time= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 20 May 2023 20:08:38 GMT -->
+</html>
+
