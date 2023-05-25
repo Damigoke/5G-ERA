@@ -6,10 +6,22 @@ const Mongoose = require('mongoose');
     userID: {
         type: Mongoose.Schema.Types.ObjectId,
         required: true,
-        unique: true
-    }, 
+        ref: 'userModel'
+    },
+    machineName:{
+        type: String,
+        required: true
+    },
     amount: {
-        type: Number,
+        type: String,
+        required: true
+    },
+    lifeCycle:{
+        type: String,
+        required: true
+    },
+    dailyIncome:{
+        type: String,
         required: true
     },
     timestamp: {

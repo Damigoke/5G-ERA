@@ -7,7 +7,7 @@ const jwtsecret = process.env.JWT_SECRET;
 
 const createUser = async (req, res) => {
   try {
-    const { number, password, confirm_password } = req.body;
+    const { number, password } = req.body;
 
     const resultValidation = createUserSchema.validate(req.body, options)
     
@@ -32,6 +32,7 @@ const createUser = async (req, res) => {
       return res.status(400).json({ msg: "User not Registered" });
   };
 };
+
 
 const loginUser = async(req,res) => {
 try{ 

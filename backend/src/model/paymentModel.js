@@ -6,10 +6,10 @@ const Mongoose = require('mongoose');
     userID: {
         type: Mongoose.Schema.Types.ObjectId,
         required: true,
-        unique: true
+        ref: 'userModel'
     }, 
     amount: {
-        type: Number,
+        type: String,
         required: true
     },
     timestamp: {
