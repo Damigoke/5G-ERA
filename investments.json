@@ -1,0 +1,44 @@
+[{
+  "_id": {
+    "$oid": "646f20ebf94b37c2f5261d51"
+  },
+  "userID": {
+    "$oid": "646f090bbcd8b09a3feb8aee"
+  },
+  "machineName": "Micro base station 5kw",
+  "amount": "3000",
+  "lifeCycle": "4 days",
+  "timestamp": {
+    "$date": "2023-05-25T08:48:43.918Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "646f227bf94b37c2f5261d5e"
+  },
+  "userID": {
+    "$oid": "646f2193f94b37c2f5261d54"
+  },
+  "machineName": "Micro base station 5kw",
+  "amount": "5000",
+  "lifeCycle": "10 days",
+  "timestamp": {
+    "$date": "2023-05-25T08:55:23.215Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "646f236a102570c7b5a6f07c"
+  },
+  "userID": {
+    "$oid": "646f2193f94b37c2f5261d54"
+  },
+  "machineName": "Micro base station 5kw",
+  "amount": "#4000",
+  "lifeCycle": "10 days",
+  "dailyIncome": "#1200",
+  "timestamp": {
+    "$date": "2023-05-25T08:59:22.317Z"
+  },
+  "__v": 0
+}]
