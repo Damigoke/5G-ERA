@@ -5,11 +5,14 @@ const jwtsecret = process.env.JWT_SECRET;
 
 const auth = async (req, res, next) => {
   try {
+    console.log('here')
+    
     const authorization = req.headers.authorization.split(" ")[1];
     //req.cookies.token
     //req.headers.authorization.split(' ')[1];
     console.log(authorization);
-
+    console.log('here')
+    
     if (!authorization) {
       return res.status(401).json({ error: "Kindly Log in as a User" });
     }

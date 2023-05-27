@@ -13,6 +13,7 @@ const createPayment = async(req ,res) => {
 
         return res.status(201).json({ msg: "You have successfully Recharge your account", createPayment }) 
     }catch(err){
+        console.log(err)
         return res.status(400).json({ msg: "Payment not found" });
     }
 };

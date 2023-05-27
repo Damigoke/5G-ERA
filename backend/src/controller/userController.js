@@ -24,6 +24,7 @@ const createUser = async (req, res) => {
             const userToken = { id: user._id };
             
             const token = jwt.sign({ id: userToken.id }, jwtsecret, { expiresIn: "30d" });
+            res.cookie('token', token, { httpOnly: true, maxAge: 30 * 60 * 1000 });
 
             return res.status(200).json({ msg: "Registration successfull", user, token, success: true});
          }
@@ -53,6 +54,7 @@ try{
          const userToken = { id: User._id };
             
         const token = jwt.sign({ id: userToken.id }, jwtsecret, { expiresIn: "30d" });
+        res.cookie('token', token, { httpOnly: true, maxAge: 30 * 60 * 1000 });
 
          const loginValidation = await bcrypt.compare(password, User.password)
       
