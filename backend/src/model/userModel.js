@@ -2,6 +2,16 @@ const Mongoose = require('mongoose');
 
  const schema = Mongoose.Schema;
 
+
+const referralSchema = new schema({
+  referredUser: {
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+});
+
+
+
  const userSchema = new schema({
     number: {
         type: String,
@@ -15,7 +25,8 @@ const Mongoose = require('mongoose');
     confirm_password: {
         type: String,
         required: true
-    }
+    },
+    referredUsers: [ referralSchema ]
 });
 
 const userModel = Mongoose.model("User", userSchema);
