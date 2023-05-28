@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors')
 const userRouter = require('./routes/users')
 const paymentRouter = require('./routes/payments');
 const investmentRouter = require('./routes/investment');
@@ -32,6 +33,7 @@ mongoose
 
 app.use(express.json());
 app.use(logger('dev'));
+app.use(cors());
 app.use('/users', userRouter);
 app.use('/payments', paymentRouter);
 app.use('/investment', investmentRouter);
