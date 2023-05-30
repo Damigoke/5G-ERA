@@ -33,7 +33,20 @@ mongoose
 
 app.use(express.json());
 app.use(logger('dev'));
-app.use(cors());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allow the specified HTTP methods
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization'); // Allow the specified headers
+
+  // Handle pre-flight OPTIONS requests
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
+
 app.use('/users', userRouter);
 app.use('/payments', paymentRouter);
 app.use('/investment', investmentRouter);
